@@ -1,0 +1,23 @@
+{
+  "name": "bkrukowski/error-dumper",
+  "description": "Pretty errors and exceptions in PHP.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Bartłomiej Krukowski",
+      "email": "bartlomiej@krukowski.me"
+    }
+  ],
+  "require": {
+    "php": ">=5.3"
+  },
+  "suggest": {
+    "symfony/var-dumper": "Pretty var_dump without xdebug."
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.*"
+  },
+  "autoload": {
+    "psr-4": {"ErrorDumper\\": "src/"}
+  }
+}
