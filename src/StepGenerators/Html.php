@@ -208,7 +208,7 @@ class Html implements StepGeneratorInterface
             $currentLine = str_replace("\t", '    ', $currentLine);
             $currentLineNumber = $key + 1;
             $lineLink = $this->editor->createLinkToFile($filename, $currentLineNumber);
-            $lineTag = "<a href='{$lineLink}''>#{$currentLineNumber}</a>";
+            $lineTag = "<a href='{$lineLink}'>#{$currentLineNumber}</a>";
             $currentLine = $lineTag
                 . str_pad('',  $maxStrLen - strlen($currentLineNumber), ' ')
                 . htmlspecialchars($currentLine);

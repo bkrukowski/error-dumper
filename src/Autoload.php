@@ -16,8 +16,9 @@ class Autoload
 
     public function __invoke($className)
     {
-        foreach ($this->namespaces as list($namespace, $dir))
+        foreach ($this->namespaces as $data)
         {
+            list($namespace, $dir) = $data;
             if (strpos($className, $namespace . '\\') === 0)
             {
                 $filename = $dir . substr($className, strlen($namespace)) . '.php';
