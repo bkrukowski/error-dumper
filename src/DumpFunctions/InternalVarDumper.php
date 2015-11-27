@@ -2,8 +2,6 @@
 
 namespace ErrorDumper\DumpFunctions;
 
-use ErrorDumper\DumpFunctionInterface;
-
 class InternalVarDumper implements DumpFunctionInterface
 {
     public function __invoke($var)

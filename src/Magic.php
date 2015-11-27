@@ -3,7 +3,11 @@
 namespace ErrorDumper;
 
 use ErrorDumper\Editors;
+use ErrorDumper\Handlers\Handler;
+use ErrorDumper\Handlers\HandlerInterface;
+use ErrorDumper\Handlers\RegisterErrorHandler;
 use ErrorDumper\Helpers\Exceptions;
+use ErrorDumper\Dumpers;
 
 /**
  * @codeCoverageIgnore
@@ -25,34 +29,40 @@ class Magic
      *  ->setPostCallback(callable $postCallback);
      *
      * @see Handler::__invoke()
-     * @param EditorInterface|null $editor
+     * @param Editors\EditorInterface|null $editor
      * @return HandlerInterface
      */
-    public static function registerErrorDumper(EditorInterface $editor = null)
+    public static function registerErrorDumper(Editors\EditorInterface $editor = null)
     {
-        is_null($editor) && $editor = new Editors\PhpStorm();
-        $cliModes = ['cli'];
-        $mode = in_array(php_sapi_name(), $cliModes) ? Dumper::MODE_CLI : Dumper::MODE_HTML;
-        $dumper = (new Dumper())
-            ->setMode($mode)
-            ->setOutputStream(fopen('php://output', 'w'))
-            ->setEditor($editor)
-            ->setBootstrapJs(Dumper::BOOTSTRAP_JS)
-            ->setBootstrapCss(Dumper::BOOTSTRAP_CSS)
-            ->setJqueryJs(Dumper::JQUERY_JS);
-        $preCallback = function () use ($mode) {
-            if ($mode === Dumper::MODE_HTML && !headers_sent())
-            {
-                http_response_code(503);
-            }
-        };
+        $preCallback = null;
         $postCallback = function () {
             exit(1);
         };
-        $handler = (new Handler($dumper))
-            ->setPreCallback($preCallback)
-            ->setPostCallback($postCallback);
-        (new RegisterErrorHandler($handler))->register();
+        if (php_sapi_name() === 'cli')
+        {
+            $dumper = new Dumpers\Cli(fopen('php:/output', 'w'));
+        }
+        else
+        {
+            is_null($editor) && $editor = new Editors\PhpStorm();
+            $dumper = (new Dumpers\Html($editor, fopen('php://output', 'w')));
+            $preCallback = function () {
+                if (!headers_sent())
+                {
+                    header('HTTP/1.1 503 Service Temporarily Unavailable');
+                    header('Status: 503 Service Temporarily Unavailable');
+                    header('Retry-After: 300');
+                }
+            };
+        }
+        $handler = new Handler($dumper);
+        $handler->setPostCallback($postCallback);
+        if ($preCallback)
+        {
+            $handler->setPreCallback($preCallback);
+        }
+        $registerErrorHandler = new RegisterErrorHandler($handler);
+        $registerErrorHandler->register();
 
         return $handler;
     }
@@ -64,9 +74,14 @@ class Magic
      * @param int $mode
      * @throws Helpers\NotCallableException
      */
-    public static function registerErrorCallback($callable, $mode = E_STRICT | E_ALL)
+    public static function registerErrorCallback($callable, $mode = null)
     {
+        if (is_null($mode))
+        {
+            $mode = E_STRICT | E_ALL;
+        }
         Exceptions::throwIfIsNotCallable($callable);
-        (new RegisterErrorHandler($callable, $mode))->register();
+        $registerErrorHandler = new RegisterErrorHandler($callable, $mode);
+        $registerErrorHandler->register();
     }
 }

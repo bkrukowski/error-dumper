@@ -2,15 +2,18 @@
 
 namespace ErrorDumper;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Autoload
 {
     private $namespaces;
 
     private function __construct()
     {
-        $this->namespaces = [
-            ['ErrorDumper', __DIR__],
-        ];
+        $this->namespaces = array(
+            array('ErrorDumper', __DIR__),
+        );
         spl_autoload_register($this);
     }
 

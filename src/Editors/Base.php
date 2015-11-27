@@ -2,18 +2,21 @@
 
 namespace ErrorDumper\Editors;
 
-use ErrorDumper\EditorInterface;
-
 abstract class Base implements EditorInterface
 {
-    private $mapping = [];
+    private $mapping = array();
 
     public function createLinkToFile($file, $line)
     {
-        return $this->getProtocol() . '://open?' . http_build_query([
+        if (!$line)
+        {
+            return '';
+        }
+
+        return $this->getProtocol() . '://open?' . http_build_query(array(
             'file' => $this->convertPath($file),
             'line' => $line
-        ]);
+        ));
     }
 
     public function registerDirectoryMap($serverPath, $projectPath)

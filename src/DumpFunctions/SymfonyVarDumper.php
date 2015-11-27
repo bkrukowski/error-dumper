@@ -2,7 +2,6 @@
 
 namespace ErrorDumper\DumpFunctions;
 
-use ErrorDumper\DumpFunctionInterface;
 use Symfony\Component;
 
 /**

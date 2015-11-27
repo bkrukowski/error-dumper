@@ -1,6 +1,3 @@
-<?php
-    use ErrorDumper\Helpers\Strings;
-?>
 <!doctype html>
 <html>
 <head>
@@ -151,6 +148,6 @@
 <?php foreach ($data['__static']['js'] as $file) { ?>
     <script type="text/javascript" src="<?php echo $file ?>"></script>
 <?php } ?>
-<?php echo \ErrorDumper\Dumper::TAG_HTML ?>
+<?php echo \ErrorDumper\Dumpers\Html::TAG_HTML ?>
 </body>
 </html>
