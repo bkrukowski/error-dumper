@@ -3,7 +3,7 @@
 namespace ErrorDumper\Tests\Dumpers;
 
 use ErrorDumper\Dumpers\Html;
-use ErrorDumper\DumpFunctions\LiteVarDumper;
+use ErrorDumper\DumpFunctions\LightVarDumper;
 use ErrorDumper\Editors\EditorInterface;
 use ErrorDumper\Editors\Nothing;
 use ErrorDumper\Editors\PhpStorm;
@@ -32,7 +32,7 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($html, $html->setBootstrapCss(Html::BOOTSTRAP_CSS));
         $this->assertSame($html, $html->setJqueryJs(Html::JQUERY_JS));
         $this->assertSame($html, $html->setBootstrapJs(Html::BOOTSTRAP_JS));
-        $this->assertSame($html, $html->setVarDumpFn(new LiteVarDumper()));
+        $this->assertSame($html, $html->setVarDumpFn(new LightVarDumper()));
         $this->assertSame($html, $html->setEditor($editorMock));
         $html->displayException(new \Exception(__FILE__));
         $output = StreamHelper::getContentsFromStream($stream);

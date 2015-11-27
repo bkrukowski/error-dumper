@@ -2,7 +2,7 @@
 
 namespace ErrorDumper\DumpFunctions;
 
-class LiteVarDumper implements DumpFunctionInterface
+class LightVarDumper implements DumpFunctionInterface
 {
     const XDEBUG_CONFIG_KEY = 'xdebug.overload_var_dump';
 

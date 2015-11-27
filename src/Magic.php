@@ -2,7 +2,7 @@
 
 namespace ErrorDumper;
 
-use ErrorDumper\DumpFunctions\LiteVarDumper;
+use ErrorDumper\DumpFunctions\LightVarDumper;
 use ErrorDumper\Editors;
 use ErrorDumper\Handlers\Handler;
 use ErrorDumper\Handlers\HandlerInterface;
@@ -89,13 +89,13 @@ class Magic
      * @return string
      * @throws Helpers\NotThrowableException
      */
-    public static function exportExceptionToLiteHtml($exception, Editors\EditorInterface $editor = null)
+    public static function exportExceptionToLightHtml($exception, Editors\EditorInterface $editor = null)
     {
         Exceptions::throwIfIsNotThrowable($exception);
         is_null($editor) && $editor = new Editors\Nothing();
         $tmp = tmpfile();
         $dumper = new Dumpers\Html($editor, $tmp);
-        $dumper->setVarDumpFn(new LiteVarDumper());
+        $dumper->setVarDumpFn(new LightVarDumper());
         $dumper->displayException($exception);
         $result = Stream::getContentsFromStream($tmp);
         fclose($tmp);
