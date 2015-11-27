@@ -2,12 +2,14 @@
 
 namespace ErrorDumper;
 
+use ErrorDumper\DumpFunctions\LiteVarDumper;
 use ErrorDumper\Editors;
 use ErrorDumper\Handlers\Handler;
 use ErrorDumper\Handlers\HandlerInterface;
 use ErrorDumper\Handlers\RegisterErrorHandler;
 use ErrorDumper\Helpers\Exceptions;
 use ErrorDumper\Dumpers;
+use ErrorDumper\Helpers\Stream;
 
 /**
  * @codeCoverageIgnore
@@ -76,12 +78,28 @@ class Magic
      */
     public static function registerErrorCallback($callable, $mode = null)
     {
-        if (is_null($mode))
-        {
-            $mode = E_STRICT | E_ALL;
-        }
         Exceptions::throwIfIsNotCallable($callable);
         $registerErrorHandler = new RegisterErrorHandler($callable, $mode);
         $registerErrorHandler->register();
+    }
+
+    /**
+     * @param $exception
+     * @param Editors\EditorInterface|null $editor
+     * @return string
+     * @throws Helpers\NotThrowableException
+     */
+    public static function exportExceptionToLiteHtml($exception, Editors\EditorInterface $editor = null)
+    {
+        Exceptions::throwIfIsNotThrowable($exception);
+        is_null($editor) && $editor = new Editors\Nothing();
+        $tmp = tmpfile();
+        $dumper = new Dumpers\Html($editor, $tmp);
+        $dumper->setVarDumpFn(new LiteVarDumper());
+        $dumper->displayException($exception);
+        $result = Stream::getContentsFromStream($tmp);
+        fclose($tmp);
+
+        return $result;
     }
 }

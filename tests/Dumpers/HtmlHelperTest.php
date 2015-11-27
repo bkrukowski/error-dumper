@@ -42,6 +42,7 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
         if (PHPVersion::atLeast('5.6.0'))
         {
             $exceptions[] = $this->createExceptionVariadicParams();
+            $exceptions[] = $this->createExceptionVariadicParams2();
         }
 
         $result = array();
@@ -88,5 +89,10 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
     private function createExceptionVariadicParams()
     {
         return CreateExceptionVariadic::createException();
+    }
+
+    private static function createExceptionVariadicParams2()
+    {
+        return CreateExceptionVariadic::createException2();
     }
 }

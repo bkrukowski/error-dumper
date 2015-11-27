@@ -6,6 +6,10 @@
 * no dependencies
 * for nicer dump of variables you can add **symfony/var-dumper** to project
 
+## Tests
+
+100% code coverage with PHPUnit.
+
 ## Installation
 
 ### If you use composer
@@ -59,6 +63,14 @@ Numbers of lines and names of files are clickable, but you have to set proper ed
 * MacVim
 * PhpStorm
 * TextMate
+
+## Snapshots
+
+Using below code, you can save exception somewhere and displey him later:
+
+```php
+$output = \ErrorDumper\Magic::exportExceptionToLiteHtml($exception);
+```
 
 ## Preview
 

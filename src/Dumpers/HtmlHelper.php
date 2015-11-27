@@ -91,10 +91,9 @@ class HtmlHelper
             /**
              * isVariadic requires at least php 5.6.0
              */
-            // @codeCoverageIgnoreStart
             if (PHPVersion::atLeast('5.6.0') && $reflectionParam->isVariadic())
             {
-                if (empty($params) || $params > static::MAX_VARIADIC_ARGS)
+                if (empty($params) || count($params) > static::MAX_VARIADIC_ARGS)
                 {
                     $dump = $this->dump($params);
                     $result[] = array(
@@ -118,7 +117,6 @@ class HtmlHelper
                 $params = array();
                 break;
             }
-            // @codeCoverageIgnoreEnd
             $isset = in_array(0, array_keys($params), true);
             $param = array_shift($params);
             $dump = $this->dump($param);
@@ -205,8 +203,15 @@ class HtmlHelper
         {
             $currentLine = str_replace("\t", '    ', $currentLine);
             $currentLineNumber = $key + 1;
-            $lineLink = htmlspecialchars($this->editor->createLinkToFile($filename, $currentLineNumber));
-            $lineTag = "<a href='{$lineLink}'>#{$currentLineNumber}</a>";
+            $lineLink = $this->editor->createLinkToFile($filename, $currentLineNumber);
+            if ($lineLink !== '')
+            {
+                $lineTag = "<a href='{$lineLink}'>#{$currentLineNumber}</a>";
+            }
+            else
+            {
+                $lineTag = '#' . $currentLineNumber;
+            }
             $currentLine = $lineTag
                 . str_pad('',  $maxStrLen - strlen($currentLineNumber), ' ')
                 . htmlspecialchars($currentLine);

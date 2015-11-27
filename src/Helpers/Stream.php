@@ -1,8 +1,8 @@
 <?php
 
-namespace ErrorDumper\Tests;
+namespace ErrorDumper\Helpers;
 
-class StreamHelper
+class Stream
 {
     public static function getContentsFromStream($stream)
     {

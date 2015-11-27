@@ -3,7 +3,7 @@
 namespace ErrorDumper\Tests\Dumpers;
 
 use ErrorDumper\Dumpers\Cli;
-use ErrorDumper\Tests\StreamHelper;
+use ErrorDumper\Helpers\Stream as StreamHelper;
 
 class CliTest extends \PHPUnit_Framework_TestCase
 {
