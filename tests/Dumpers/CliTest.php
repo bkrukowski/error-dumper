@@ -11,7 +11,7 @@ class CliTest extends \PHPUnit_Framework_TestCase
     {
         $stream = tmpfile();
         $cli = new Cli($stream);
-        //$cli->displayException(new \Exception(__FILE__));
-        //$this->assertContains(__FILE__, StreamHelper::getContentsFromStream($stream));
+        $cli->displayException(new \Exception(__FILE__));
+        $this->assertContains(__FILE__, StreamHelper::getContentsFromStream($stream));
     }
 }
