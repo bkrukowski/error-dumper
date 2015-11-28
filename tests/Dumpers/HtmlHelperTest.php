@@ -3,7 +3,7 @@
 namespace ErrorDumper\Tests\Dumpers;
 
 use ErrorDumper\Dumpers\HtmlHelper;
-use ErrorDumper\DumpFunctions\InternalVarDumper;
+use ErrorDumper\DumpFunctions\LightVarDumper;
 use ErrorDumper\Editors\PhpStorm;
 use ErrorDumper\Helpers\PHPVersion;
 
@@ -38,6 +38,8 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
             $this->createExceptionRequireOnce(),
             $this->createExceptionInclude(),
             $this->createExceptionReference($reference),
+            $this->createExceptionMagicCall(),
+            $this->createExceptionMagicStaticCall(),
         );
         if (PHPVersion::atLeast('5.6.0'))
         {
@@ -49,7 +51,7 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
         foreach ($exceptions as $exception)
         {
             $result[] = array(
-                new HtmlHelper(new InternalVarDumper(), new PhpStorm()),
+                new HtmlHelper(new LightVarDumper(), new PhpStorm()),
                 $exception,
             );
         }
@@ -94,5 +96,16 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
     private static function createExceptionVariadicParams2()
     {
         return CreateExceptionVariadic::createException2();
+    }
+
+    private function createExceptionMagicCall()
+    {
+        $obj = new CreateExceptionMagicCall();
+        return $obj->exception('foo', 'bar');
+    }
+
+    public static function createExceptionMagicStaticCall()
+    {
+        return CreateExceptionMagicCall::staticException('foo', 'bar');
     }
 }

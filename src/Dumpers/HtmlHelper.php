@@ -82,6 +82,20 @@ class HtmlHelper
         else
         {
             $class = new \ReflectionClass($step['class']);
+            if (!$class->hasMethod($step['function']))
+            {
+                $result = array();
+                foreach ($params as $key => $param)
+                {
+                    $dump = $this->dump($param);
+                    $result[] = array(
+                        'name' => $this->getType($param) . ': unknown[' . $key . ']',
+                        'dump' => $dump,
+                        'full' => $this->showFull($param, $dump),
+                    );
+                }
+                return $result;
+            }
             $function = $class->getMethod($step['function']);
         }
         $result = array();
