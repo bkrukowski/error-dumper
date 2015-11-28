@@ -42,7 +42,7 @@ class Magic
         };
         if (php_sapi_name() === 'cli')
         {
-            $dumper = new Dumpers\Cli(fopen('php:/output', 'w'));
+            $dumper = new Dumpers\Cli(fopen('php://output', 'w'));
         }
         else
         {
