@@ -66,7 +66,7 @@ Numbers of lines and names of files are clickable, but you have to set proper ed
 
 ## Snapshots
 
-Using below code, you can save exception somewhere and displey him later:
+Using below code, you can save exception somewhere and display it later:
 
 ```php
 $output = \ErrorDumper\Magic::exportExceptionToLightHtml($exception);
