@@ -206,6 +206,7 @@ class HtmlHelper
             $lineLink = $this->editor->createLinkToFile($filename, $currentLineNumber);
             if ($lineLink !== '')
             {
+                $lineLink = htmlspecialchars($lineLink);
                 $lineTag = "<a href='{$lineLink}'>#{$currentLineNumber}</a>";
             }
             else
