@@ -18,7 +18,9 @@
     "phpunit/phpunit": "4.*"
   },
   "autoload": {
-    "psr-4": {"ErrorDumper\\": "src/"},
-    "psr-4": {"ErrorDumper\\Tests\\": "tests/"}
+    "psr-4": {
+      "ErrorDumper\\": "src/",
+      "ErrorDumper\\Tests\\": "tests/"
+    }
   }
 }
