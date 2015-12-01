@@ -43,6 +43,9 @@ class Magic
         if (php_sapi_name() === 'cli')
         {
             $dumper = new Dumpers\Cli(fopen('php://output', 'w'));
+            $dumper->setWindowWidthGetter(function () {
+                return (int) exec('tput cols') ? : Dumpers\Cli::EMPHASIS_LENGTH;
+            });
         }
         else
         {

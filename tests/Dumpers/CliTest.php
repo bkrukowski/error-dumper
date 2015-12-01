@@ -11,7 +11,16 @@ class CliTest extends \PHPUnit_Framework_TestCase
     {
         $stream = tmpfile();
         $cli = new Cli($stream);
+        $called = false;
+        $cli->setWindowWidthGetter(function () use (&$called) {
+            $called = true;
+
+            return 35;
+        });
         $cli->displayException(new \Exception(__FILE__));
-        $this->assertContains(__FILE__, Stream::getContentsFromStream($stream));
+        $output = Stream::getContentsFromStream($stream);
+        $this->assertTrue($called);
+        $this->assertContains(__FILE__, $output);
+        $this->assertContains(str_pad('', 35, '#'), $output);
     }
 }
