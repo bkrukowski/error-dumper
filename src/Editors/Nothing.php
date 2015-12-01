@@ -6,7 +6,7 @@ class Nothing implements EditorInterface
 {
     public function createLinkToFile($file, $line)
     {
-        return '';
+        throw new CannotGenerateLinkException();
     }
 
     public function registerDirectoryMap($serverPath, $projectPath)

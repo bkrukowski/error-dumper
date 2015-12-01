@@ -3,6 +3,7 @@
 namespace ErrorDumper\Dumpers;
 
 use ErrorDumper\DumpFunctions\DumpFunctionInterface;
+use ErrorDumper\Editors\CannotGenerateLinkException;
 use ErrorDumper\Editors\EditorInterface;
 use ErrorDumper\Helpers\PHPVersion;
 
@@ -177,11 +178,15 @@ class HtmlHelper
             $title .= $rawStep['function'] . '()';
         }
         $title .= "</strong>";
-        $link = $this->editor->createLinkToFile($rawStep['file'], $rawStep['line']);
-        if ($link !== '')
+
+        try
         {
+            $link = $this->editor->createLinkToFile($rawStep['file'], $rawStep['line']);
             $link = htmlspecialchars($link);
             $title = "<a href='{$link}'>{$title}</a>";
+        }
+        catch(CannotGenerateLinkException $e)
+        {
         }
 
         return array(
@@ -217,16 +222,18 @@ class HtmlHelper
         {
             $currentLine = str_replace("\t", '    ', $currentLine);
             $currentLineNumber = $key + 1;
-            $lineLink = $this->editor->createLinkToFile($filename, $currentLineNumber);
-            if ($lineLink !== '')
+
+            try
             {
+                $lineLink = $this->editor->createLinkToFile($filename, $currentLineNumber);
                 $lineLink = htmlspecialchars($lineLink);
                 $lineTag = "<a href='{$lineLink}'>#{$currentLineNumber}</a>";
             }
-            else
+            catch (CannotGenerateLinkException $e)
             {
                 $lineTag = '#' . $currentLineNumber;
             }
+
             $currentLine = $lineTag
                 . str_pad('',  $maxStrLen - strlen($currentLineNumber), ' ')
                 . htmlspecialchars($currentLine);
