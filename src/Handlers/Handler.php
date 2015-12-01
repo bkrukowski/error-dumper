@@ -66,7 +66,7 @@ class Handler implements HandlerInterface
         {
             try
             {
-                $pre($e);
+                call_user_func($pre, $e);
             }
             catch (StopDisplayException $stopE)
             {
@@ -77,7 +77,7 @@ class Handler implements HandlerInterface
         $post = $this->postCallback;
         if (!empty($post))
         {
-            $post($e);
+            call_user_func($post, $e);
         }
     }
 }

@@ -43,6 +43,7 @@ class Html extends Base
 
     public function displayException($e)
     {
+        Exceptions::throwIfIsNotThrowable($e);
         $vars = array(
             'exception' => $e,
             'exceptionClass' => get_class($e),
@@ -57,7 +58,7 @@ class Html extends Base
                     $this->bootstrapJs,
                 ),
             ),
-    );
+        );
         $helper = new HtmlHelper($this->varDumpFn, $this->editor);
         $vars['trace'][] = $helper->prepareStep(array(
             'file' => $e->getFile(),
