@@ -86,6 +86,10 @@
         {
             color: #808080 !important;;
         }
+        pre.sf-dump .sf-dump-protected
+        {
+            color: #999 !important;
+        }
     </style>
 </head>
 <body>
