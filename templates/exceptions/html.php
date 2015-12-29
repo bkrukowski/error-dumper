@@ -45,7 +45,7 @@
         }
         a
         {
-            cursor: pointer;;
+            cursor: pointer;
         }
         .nav-tabs
         {
