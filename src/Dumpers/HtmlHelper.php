@@ -199,7 +199,7 @@ class HtmlHelper
 
     private function getClassShortContents($filename, $line)
     {
-        if (!is_file($filename))
+        if (!$line || !is_file($filename))
         {
             return "File does not exists {$filename}:{$line}.";
         }
