@@ -14,9 +14,6 @@
   "suggest": {
     "symfony/var-dumper": "Pretty var_dump without xdebug."
   },
-  "require-dev": {
-    "phpunit/phpunit": "4.*"
-  },
   "autoload": {
     "psr-4": {
       "ErrorDumper\\": "src/",
