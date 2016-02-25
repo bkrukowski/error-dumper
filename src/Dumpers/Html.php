@@ -11,6 +11,7 @@ use ErrorDumper\Views\Template;
 class Html extends Base
 {
     const TAG_HTML = '<!-- @ErrorDumper -->';
+    const TAG_UNDER_TITLE = '<!-- @ErrorDumper under title -->';
 
     const BOOTSTRAP_CSS = '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css';
     const BOOTSTRAP_JS = '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js';

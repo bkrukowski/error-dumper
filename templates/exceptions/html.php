@@ -96,6 +96,8 @@
 <div class="container">
     <h1>Error!</h1>
 
+    <?php echo \ErrorDumper\Dumpers\Html::TAG_UNDER_TITLE ?>
+
     <h2>Message</h2>
     <pre><strong><?php echo $data['exceptionClass']; ?></strong><?php echo isset($data['message']) ? ' ' . $data['message'] : '' ?></pre>
 

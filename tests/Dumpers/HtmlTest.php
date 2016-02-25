@@ -37,6 +37,7 @@ class HtmlTest extends \PHPUnit_Framework_TestCase
         $html->displayException(new \Exception(__FILE__));
         $output = StreamHelper::getContentsFromStream($stream);
         $this->assertContains(Html::TAG_HTML, $output);
+        $this->assertContains(Html::TAG_UNDER_TITLE, $output);
         $this->assertContains(__FILE__, $output);
         $this->assertTrue($used);
     }
