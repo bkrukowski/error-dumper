@@ -72,7 +72,7 @@ Using below code, you can save exception somewhere and display it later:
 $output = \ErrorDumper\Magic::exportExceptionToLightHtml($exception);
 ```
 
-## Adding custom information to snapshots
+### Adding custom information to snapshots
 
 From version 2.3.0 there is special constant `ErrorDumper\Dumpers\Html::TAG_UNDER_TITLE`. You can put under title whatever you want using `str_replace` function.
 
