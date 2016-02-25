@@ -9,6 +9,6 @@ class PhpStorm extends Base
      */
     public function getProtocol()
     {
-        return 'idea';
+        return 'phpstorm';
     }
 }
