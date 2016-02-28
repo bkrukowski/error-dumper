@@ -1,0 +1,9 @@
+<phpunit
+        bootstrap="./vendor/autoload.php"
+        >
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

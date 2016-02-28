@@ -11,6 +11,11 @@ use ErrorDumper\StandardExceptions\ShutdownErrorException;
  */
 class RegisterErrorHandler implements RegisterErrorHandlerInterface
 {
+    const TYPE_ERRORS = 1;
+    const TYPE_EXCEPTIONS = 2;
+    const TYPE_SHUTDOWN_ERRORS = 4;
+    const TYPE_ALL = 7;
+
     /**
      * @var callable
      */
@@ -33,13 +38,14 @@ class RegisterErrorHandler implements RegisterErrorHandlerInterface
     }
 
     /**
+     * @inheritdoc
      * @codeCoverageIgnore
      */
-    public function register()
+    public function register($errorTypes = RegisterErrorHandler::TYPE_ALL)
     {
-        $this->registerExceptionHandler();
-        $this->registerErrorHandler();
-        $this->registerShutdownHandler();
+        ($errorTypes & static::TYPE_EXCEPTIONS) && $this->registerExceptionHandler();
+        ($errorTypes & static::TYPE_ERRORS) && $this->registerErrorHandler();
+        ($errorTypes & static::TYPE_SHUTDOWN_ERRORS) && $this->registerShutdownHandler();
 
         return $this;
     }

@@ -11,7 +11,8 @@ interface RegisterErrorHandlerInterface
     public function setCallable($callable);
 
     /**
+     * @param int $errorTypes
      * @return RegisterErrorHandlerInterface
      */
-    public function register();
+    public function register($errorTypes = RegisterErrorHandler::TYPE_ALL);
 }

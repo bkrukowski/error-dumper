@@ -32,9 +32,13 @@ class Magic
      *
      * @see Handler::__invoke()
      * @param Editors\EditorInterface|null $editor
+     * @param int $errorTypes
      * @return HandlerInterface
      */
-    public static function registerErrorDumper(Editors\EditorInterface $editor = null)
+    public static function registerErrorDumper(
+        Editors\EditorInterface $editor = null,
+        $errorTypes = RegisterErrorHandler::TYPE_ALL
+    )
     {
         $preCallback = null;
         $postCallback = function () {
@@ -67,7 +71,7 @@ class Magic
             $handler->setPreCallback($preCallback);
         }
         $registerErrorHandler = new RegisterErrorHandler($handler);
-        $registerErrorHandler->register();
+        $registerErrorHandler->register($errorTypes);
 
         return $handler;
     }
@@ -76,14 +80,15 @@ class Magic
      * Method only for catching errors, without friendly output.
      *
      * @param $callable
-     * @param int $mode
+     * @param int|null $mode
+     * @param int $errorTypes
      * @throws Helpers\NotCallableException
      */
-    public static function registerErrorCallback($callable, $mode = null)
+    public static function registerErrorCallback($callable, $mode = null, $errorTypes = RegisterErrorHandler::TYPE_ALL)
     {
         Exceptions::throwIfIsNotCallable($callable);
         $registerErrorHandler = new RegisterErrorHandler($callable, $mode);
-        $registerErrorHandler->register();
+        $registerErrorHandler->register($errorTypes);
     }
 
     /**
