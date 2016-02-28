@@ -76,6 +76,17 @@ $output = \ErrorDumper\Magic::exportExceptionToLightHtml($exception);
 
 From version 2.3.0 there is special constant `ErrorDumper\Dumpers\Html::TAG_UNDER_TITLE`. You can put under title whatever you want using `str_replace` function.
 
+## Handle only exceptions
+
+You can choose type of errors to handling. Methods
+
+* `ErrorDumper\Magic::registerErrorDumper`
+* `ErrorDumper\Magic::registerErrorCallback`
+* `ErrorDumper\Handlers\register::register`
+
+have optional argument `$errorTypes`, default is equal `ErrorDumper\Handlers\RegisterErrorHandler::TYPE_ALL`.
+This value is equal result of binary multiplication of constants `ErrorDumper\Handlers\RegisterErrorHandler::TYPE_*`.
+If you want handle only errors, you should put here `ErrorDumper\Handlers\RegisterErrorHandler::TYPE_ERRORS | ErrorDumper\Handlers\RegisterErrorHandler::TYPE_SHUTDOWN_ERRORS`.
 
 ## Preview
 
