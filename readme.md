@@ -85,7 +85,7 @@ You can choose type of errors to handling. Methods
 
 * `ErrorDumper\Magic::registerErrorDumper`
 * `ErrorDumper\Magic::registerErrorCallback`
-* `ErrorDumper\Handlers\register::register`
+* `ErrorDumper\Handlers\RegisterErrorHandler::register`
 
 have optional argument `$errorTypes`, default is equal `ErrorDumper\Handlers\RegisterErrorHandler::TYPE_ALL`.
 This value is equal result of binary multiplication of constants `ErrorDumper\Handlers\RegisterErrorHandler::TYPE_*`.
