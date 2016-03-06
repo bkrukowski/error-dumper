@@ -1,3 +1,5 @@
+![Travis status](https://api.travis-ci.org/bkrukowski/error-dumper.svg?branch=master)
+
 # Pretty error dumper for PHP
 
 ## Requirements
