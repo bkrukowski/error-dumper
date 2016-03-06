@@ -1,6 +1,8 @@
 language: php
 
-install: composer install --dev
+install:
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install --dev
 
 php:
   - 5.3
@@ -10,4 +12,8 @@ php:
   - 7.0
   - hhvm
 
-script: phpunit tests
+script:
+  - ./vendor/bin/phpunit tests
+
+after_script:
+  - travis_retry php vendor/bin/coveralls -v
