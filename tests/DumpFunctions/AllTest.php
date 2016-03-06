@@ -26,7 +26,7 @@ class AllTest extends \PHPUnit_Framework_TestCase
         {
             foreach ($data as $var)
             {
-                $result[] = array($dumper, $data);
+                $result[] = array($dumper, $var);
             }
         }
 
