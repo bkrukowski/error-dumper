@@ -20,7 +20,11 @@
   },
   "autoload": {
     "psr-4": {
-      "ErrorDumper\\": "src/",
+      "ErrorDumper\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
       "ErrorDumper\\Tests\\": "tests/"
     }
   }
