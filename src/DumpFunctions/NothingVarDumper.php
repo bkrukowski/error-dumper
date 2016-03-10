@@ -6,6 +6,6 @@ class NothingVarDumper implements DumpFunctionInterface
 {
     public function __invoke($var)
     {
-        return '';
+        return '<pre>empty dump of variable</pre>';
     }
 }
