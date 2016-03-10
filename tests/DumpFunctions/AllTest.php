@@ -5,6 +5,7 @@ namespace ErrorDumper\TestsDumpFunctions;
 use ErrorDumper\DumpFunctions\DumpFunctionInterface;
 use ErrorDumper\DumpFunctions\InternalVarDumper;
 use ErrorDumper\DumpFunctions\LightVarDumper;
+use ErrorDumper\DumpFunctions\NothingVarDumper;
 
 class AllTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +23,7 @@ class AllTest extends \PHPUnit_Framework_TestCase
     {
         $data = array(new \stdClass(), $this,  function () {}, range(1, 1000), tmpfile(), null, array());
         $result = array();
-        foreach (array(new LightVarDumper(), new InternalVarDumper()) as $dumper)
+        foreach (array(new LightVarDumper(), new InternalVarDumper(), new NothingVarDumper()) as $dumper)
         {
             foreach ($data as $var)
             {
