@@ -23,3 +23,9 @@ Can choose type of errors which will be caught.
 * `ErrorDumper\Magic->registerErrorCallback()`
 
 New arguments have default value for backward compatibility.
+
+## 2.5
+
+Added `ErrorDumper\DumpFunctions\NothingVarDumper` for extreme cases,
+when var_dump method can take too much memory.
+
