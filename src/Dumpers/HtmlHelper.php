@@ -49,6 +49,7 @@ class HtmlHelper
         }
         if (!isset( $step['function'] ) || strpos($step['function'], static::CLOSURE_NAME) !== false)
         {
+            // @codeCoverageIgnoreStart
             $result = array();
             foreach ($params as $key => $param)
             {
@@ -60,6 +61,7 @@ class HtmlHelper
                 );
             }
             return $result;
+            // @codeCoverageIgnoreEnd
         }
         if (!isset( $step['class'] ))
         {
