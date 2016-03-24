@@ -4,8 +4,9 @@ namespace ErrorDumper\Tests\Console;
 
 use ErrorDumper\Console\Printer;
 use ErrorDumper\Helpers\Stream;
+use ErrorDumper\Tests\TestBase;
 
-class PrinterTest extends \PHPUnit_Framework_TestCase
+class PrinterTest extends TestBase
 {
     /**
      * @dataProvider provider_testMessageBox
@@ -22,12 +23,14 @@ class PrinterTest extends \PHPUnit_Framework_TestCase
 
     public function provider_testMessageBox()
     {
-        return array(
-            array('errorBox'),
-            array('infoBox'),
-            array('defaultBox'),
-            array('warningBox'),
+        $data = array(
+            'errorBox' => array('errorBox'),
+            'infoBox' => array('infoBox'),
+            'defaultBox' => array('defaultBox'),
+            'warningBox' => array('warningBox'),
         );
+
+        return $this->prepareDataProvider($data);
     }
 
     public function test_setOutputStream()

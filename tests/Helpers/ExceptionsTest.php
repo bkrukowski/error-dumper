@@ -3,8 +3,9 @@
 namespace ErrorDumper\Tests\Helpers;
 
 use ErrorDumper\Helpers\Exceptions;
+use ErrorDumper\Tests\TestBase;
 
-class ExceptionsTest extends \PHPUnit_Framework_TestCase
+class ExceptionsTest extends TestBase
 {
     /**
      * @dataProvider provider_test_throwIfIsNotThrowable
@@ -22,14 +23,12 @@ class ExceptionsTest extends \PHPUnit_Framework_TestCase
 
     public function provider_test_throwIfIsNotThrowable()
     {
-        $result = array(
+        return $this->prepareDataProvider(array(
             array(1, false),
             array(new \stdClass(), false),
             array(array(), false),
             array(new \Exception(), true),
-        );
-
-        return $result;
+        ));
     }
 
     /**
@@ -48,14 +47,14 @@ class ExceptionsTest extends \PHPUnit_Framework_TestCase
 
     public function provider_test_throwIfIsNotCallable()
     {
-        return array(
+        return $this->prepareDataProvider(array(
             array(1, false),
             array(new \stdClass(), false),
             array('strpos', true),
             array(function () {}, true),
             array(array(new static(), 'testFunction'), true),
             array(__CLASS__ . '::testFunction', true)
-        );
+        ));
     }
 
     public static function testFunction()

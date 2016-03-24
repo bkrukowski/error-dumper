@@ -6,8 +6,9 @@ use ErrorDumper\Dumpers\HtmlHelper;
 use ErrorDumper\DumpFunctions\LightVarDumper;
 use ErrorDumper\Editors\PhpStorm;
 use ErrorDumper\Helpers\PHPVersion;
+use ErrorDumper\Tests\TestBase;
 
-class HtmlHelperTest extends \PHPUnit_Framework_TestCase
+class HtmlHelperTest extends TestBase
 {
     /**
      * @dataProvider provider_test_prepareStep
@@ -56,7 +57,7 @@ class HtmlHelperTest extends \PHPUnit_Framework_TestCase
             );
         }
 
-        return $result;
+        return $this->prepareDataProvider($result);
     }
 
     private function createException()

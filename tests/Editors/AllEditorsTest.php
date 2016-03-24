@@ -6,8 +6,9 @@ use ErrorDumper\Editors\EditorInterface;
 use ErrorDumper\Editors\MacVim;
 use ErrorDumper\Editors\PhpStorm;
 use ErrorDumper\Editors\TextMate;
+use ErrorDumper\Tests\TestBase;
 
-class AllEditorsTest extends \PHPUnit_Framework_TestCase
+class AllEditorsTest extends TestBase
 {
     /**
      * @dataProvider provider_test_createLinkToFile
@@ -24,12 +25,12 @@ class AllEditorsTest extends \PHPUnit_Framework_TestCase
 
     public function provider_test_createLinkToFile()
     {
-        return array(
+        return $this->prepareDataProvider(array(
             array(new MacVim(), __FILE__, __LINE__),
             array(new PhpStorm(), __FILE__, __LINE__),
             array(new TextMate(), __FILE__, __LINE__),
             array(new PhpStorm(), '/a/b/c', 456),
-        );
+        ));
     }
 
     /**
@@ -64,6 +65,6 @@ class AllEditorsTest extends \PHPUnit_Framework_TestCase
             $result[] = array($editor, $from, $to, $from . $suffix, __LINE__, $to . $suffix);
         }
 
-        return $result;
+        return $this->prepareDataProvider($result);
     }
 }

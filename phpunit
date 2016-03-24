@@ -1,2 +1,21 @@
 #!/usr/bin/env bash
-./vendor/bin/phpunit tests
+
+rm -rf build
+mkdir -p build/logs
+
+for version in 53 56 70
+do
+    tput setaf 2
+    echo 'PHP '$version
+    tput sgr0
+    echo 'Installing composer.phar...'
+    curl -s http://getcomposer.org/installer | php$version > /dev/null 2>&1
+    echo 'Updating dependencies...'
+    php$version composer.phar update --dev > /dev/null 2>&1
+    echo 'Executing tests...'
+    php$version vendor/bin/phpunit tests --coverage-php build/logs/php-$version.cov
+    rm composer.phar
+done
+
+echo 'Merging *.cov files'
+./vendor/phpunit/phpcov/phpcov merge --html build/logs/html build/logs > /dev/null 2>&1

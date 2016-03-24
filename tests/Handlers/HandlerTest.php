@@ -7,8 +7,9 @@ use ErrorDumper\Handlers\Handler;
 use ErrorDumper\Handlers\PreCallbackEvent;
 use ErrorDumper\StandardExceptions\FakeException;
 use ErrorDumper\Helpers\Stream as StreamHelper;
+use ErrorDumper\Tests\TestBase;
 
-class HandlerTest extends \PHPUnit_Framework_TestCase
+class HandlerTest extends TestBase
 {
     public function testWarmUp()
     {
@@ -69,7 +70,7 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
     public function callbacksDataProvider()
     {
         $streamFor3 = tmpfile();
-        return array(
+        $data = array(
             array('pre', ' exception', ' post', false, tmpfile(), 'pre exception post'),
             array('pre', ' exception', ' post', true, tmpfile(), 'pre'),
             array('pre1', ' exception1', ' post1', true, $streamFor3, 'pre1'),
@@ -77,6 +78,8 @@ class HandlerTest extends \PHPUnit_Framework_TestCase
             array('pre', ' exception', ' post', false, tmpfile(), 'pre exception post'),
             array(' pre3', ' exception3', ' post3', true, $streamFor3, 'pre1 pre2 exception2 post2 pre3'),
         );
+
+        return $this->prepareDataProvider($data);
     }
 
     /**

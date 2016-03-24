@@ -3,6 +3,7 @@ language: php
 install:
   - curl -s http://getcomposer.org/installer | php
   - php composer.phar install --dev
+  - mkdir -p build/logs
 
 php:
   - 5.3
@@ -13,7 +14,8 @@ php:
   - hhvm
 
 script:
-  - ./vendor/bin/phpunit tests
+  - ./vendor/bin/phpunit tests --coverage-php build/logs/php_$(php -r 'echo phpversion();').cov
 
 after_script:
+  - ./vendor/phpunit/phpcov/phpcov merge --clover build/logs/clover.xml build/logs
   - travis_retry php vendor/bin/coveralls -v
