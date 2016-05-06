@@ -47,7 +47,9 @@ else
 {
     \ErrorDumper\Magic::registerErrorCallback(function ($e) {
         /** @var \Exception|\Throwable $e */
-        // save error somewhere
+        // save error somewhere, for example:
+        // $output = \ErrorDumper\Magic::exportExceptionToLightHtml($exception);
+        // \Foo\MyErrorStorage::addHtmlError($output);
         exit(1);
     });
 }
