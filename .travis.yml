@@ -14,8 +14,7 @@ php:
   - hhvm
 
 script:
-  - ./vendor/bin/phpunit tests --coverage-php build/logs/php_$(php -r 'echo phpversion();').cov
+  - phpunit --configuration phpunit.xml.dist --coverage-text tests
 
 after_script:
-  - ./vendor/phpunit/phpcov/phpcov merge --clover build/logs/clover.xml build/logs
   - travis_retry php vendor/bin/coveralls -v

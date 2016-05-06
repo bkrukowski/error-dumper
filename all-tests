@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+
+set -e
+
+BASE_DIR=$(pwd)
+LAST_VERSION='none'
+
+function initProject()
+{
+    rm -rf build
+    mkdir -p build/logs
+}
+
+function resetTextStyle()
+{
+    tput sgr0
+}
+
+function printHeader()
+{
+    tput setaf 0
+    tput setab 2
+    echo -n " # $1 "
+    resetTextStyle
+    echo ''
+}
+
+function printInfo()
+{
+    echo "";
+    tput setaf 0
+    tput setab 7
+    echo -n " ### $1 "
+    resetTextStyle
+}
+
+function runTestsFor()
+{
+    local version=$1
+    LAST_VERSION=$version
+    printHeader "PHP $version"
+    versionDir="$BASE_DIR/php-versions/$version"
+    mkdir -p $versionDir
+    if [ ! -f "$BASE_DIR/php-versions/$version/autoload.php" ]; then
+        cd $versionDir
+        echo 'Installing composer.phar...'
+        curl -s http://getcomposer.org/installer | php$version 1>/dev/null
+        cd $BASE_DIR
+
+        echo 'Updating dependencies...'
+        $BASE_DIR/php-versions/$version/composer.phar config vendor-dir "php-versions/$version"
+        php$version "$versionDir/composer.phar" update
+        $BASE_DIR/php-versions/$version/composer.phar config --unset vendor-dir
+        rm $BASE_DIR/composer.lock
+    fi
+    echo 'Executing tests...'
+    php$version "php-versions/$version/bin/phpunit" tests \
+        --bootstrap "php-versions/$version/autoload.php" \
+        --coverage-php build/logs/php-$version.cov \
+        --colors=auto
+    echo ""
+}
+
+function runTestsForAll
+{
+    for version in 53 54 55 56 70
+    do
+        runTestsFor $version
+    done
+}
+
+if [ "$1" == "-h" ]
+then
+    tput setaf 2
+    echo "Usage: `basename $0`"
+    echo "    -h - this command"
+    echo "    53 - run tests for php53 (command 'php53' is required)"
+    echo "    without arguments - run tests for all supported php versions"
+    echo -n "Supported php versions: 53, 54, 55, 56, 70, default."
+    resetTextStyle
+    echo ""
+    exit 0
+fi
+
+initProject
+
+if [ -n "$1" ]
+then
+    v=$1
+    if [[ "$v" == "default" ]]
+    then
+        v=$(php -r "echo PHP_MAJOR_VERSION, PHP_MINOR_VERSION;")
+    fi
+    printInfo "ErrorDumper                 "
+    printInfo "Running tests for version $v"
+    echo ""
+    echo ""
+    runTestsFor $v
+else
+    printInfo "ErrorDumper                   "
+    printInfo "Running tests for all versions"
+    echo ""
+    echo ""
+    runTestsForAll
+fi
+
+echo 'Merging *.cov files'
+./php-versions/$LAST_VERSION/phpunit/phpcov/phpcov merge --html build/logs/html build/logs > /dev/null 2>&1
