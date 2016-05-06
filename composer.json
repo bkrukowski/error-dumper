@@ -19,6 +19,9 @@
   "suggest": {
     "symfony/var-dumper": "Pretty var_dump without xdebug."
   },
+  "conflict": {
+    "symfony/var-dumper": "<2.0 || >=4.0"
+  },
   "autoload": {
     "psr-4": {
       "ErrorDumper\\": "src/"
