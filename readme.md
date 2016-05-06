@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/bkrukowski/error-dumper.svg?branch=master)](https://travis-ci.org/bkrukowski/error-dumper)
-[![Coverage Status](https://coveralls.io/repos/bkrukowski/error-dumper/badge.svg?branch=master&service=github)](https://coveralls.io/github/bkrukowski/error-dumper?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/bkrukowski/error-dumper/badge.svg?branch=master)](https://coveralls.io/github/bkrukowski/error-dumper?branch=master)
 
 # Pretty error dumper for PHP
 
