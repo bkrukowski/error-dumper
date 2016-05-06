@@ -12,7 +12,7 @@
 
 ## Tests
 
-100% code coverage with PHPUnit.
+[100% code coverage](https://coveralls.io/github/bkrukowski/error-dumper) with PHPUnit.
 
 ## Installation
 
