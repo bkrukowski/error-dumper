@@ -14,7 +14,7 @@ php:
   - hhvm
 
 script:
-  - phpunit --configuration phpunit.xml.dist --coverage-text tests
+  - ./vendor/bin/phpunit tests --coverage-clover ./build/logs/clover.xml
 
 after_script:
   - travis_retry php vendor/bin/coveralls -v
