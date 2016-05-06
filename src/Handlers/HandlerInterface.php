@@ -18,9 +18,9 @@ interface HandlerInterface
     public function getDumper();
 
     /**
-     * @param \Exception|\Throwable $e
+     * @param \Exception|\Throwable $exception
      */
-    public function __invoke($e);
+    public function __invoke($exception);
 
     /**
      * @param callable $callback

@@ -5,9 +5,9 @@ namespace ErrorDumper\Dumpers;
 interface DumperInterface
 {
     /**
-     * @param \Exception|\Throwable $e
+     * @param \Exception|\Throwable $exception
      */
-    public function displayException($e);
+    public function displayException($exception);
 
     /**
      * @param $output resource

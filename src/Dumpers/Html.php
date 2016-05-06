@@ -42,13 +42,13 @@ class Html extends Base
             ->setVarDumpFn(Detector::createDetectedVarDumper());
     }
 
-    public function displayException($e)
+    public function displayException($exception)
     {
-        Exceptions::throwIfIsNotThrowable($e);
+        Exceptions::throwIfIsNotThrowable($exception);
         $vars = array(
-            'exception' => $e,
-            'exceptionClass' => get_class($e),
-            'message' => $e->getMessage(),
+            'exception' => $exception,
+            'exceptionClass' => get_class($exception),
+            'message' => $exception->getMessage(),
             'trace' => array(),
             '__static' => array(
                 'css' => array(
@@ -62,10 +62,10 @@ class Html extends Base
         );
         $helper = new HtmlHelper($this->varDumpFn, $this->editor);
         $vars['trace'][] = $helper->prepareStep(array(
-            'file' => $e->getFile(),
-            'line' => $e->getLine(),
+            'file' => $exception->getFile(),
+            'line' => $exception->getLine(),
         ));
-        foreach ($e->getTrace() as $rawStep)
+        foreach ($exception->getTrace() as $rawStep)
         {
             $vars['trace'][] = $helper->prepareStep($rawStep);
         }
@@ -85,14 +85,14 @@ class Html extends Base
     }
 
     /**
-     * @param DumpFunctionInterface $fn
+     * @param DumpFunctionInterface $function
      * @return Html
      * @throws \ErrorDumper\Helpers\NotCallableException
      */
-    public function setVarDumpFn(DumpFunctionInterface $fn)
+    public function setVarDumpFn(DumpFunctionInterface $function)
     {
-        Exceptions::throwIfIsNotCallable($fn);
-        $this->varDumpFn = $fn;
+        Exceptions::throwIfIsNotCallable($function);
+        $this->varDumpFn = $function;
 
         return $this;
     }

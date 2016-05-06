@@ -56,28 +56,28 @@ class Handler implements HandlerInterface
     }
 
     /**
-     * @param \Exception|\Throwable $e
+     * @param \Exception|\Throwable $exception
      */
-    public function __invoke($e)
+    public function __invoke($exception)
     {
-        Exceptions::throwIfIsNotThrowable($e);
+        Exceptions::throwIfIsNotThrowable($exception);
         $pre = $this->preCallback;
         if (!empty($pre))
         {
             try
             {
-                call_user_func($pre, $e);
+                call_user_func($pre, $exception);
             }
             catch (StopDisplayException $stopE)
             {
                 return;
             }
         }
-        $this->dumper->displayException($e);
+        $this->dumper->displayException($exception);
         $post = $this->postCallback;
         if (!empty($post))
         {
-            call_user_func($post, $e);
+            call_user_func($post, $exception);
         }
     }
 }

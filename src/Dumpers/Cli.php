@@ -26,18 +26,18 @@ class Cli extends Base
         $this->setOutputStream($stream);
     }
 
-    public function displayException($e)
+    public function displayException($exception)
     {
-        Exceptions::throwIfIsNotThrowable($e);
+        Exceptions::throwIfIsNotThrowable($exception);
         $width = $this->getWindowWidth();
         $this->printer->defaultBox('');
         $this->printer->defaultBox('');
         $this->printer->errorBox(str_pad('', $width, '#'));
-        $this->printer->errorBox(get_class($e) . ': ' . $e->getMessage());
+        $this->printer->errorBox(get_class($exception) . ': ' . $exception->getMessage());
         $this->printer->errorBox(str_pad('', $width, '#'));
         $this->printer->defaultBox('');
         $this->printer->defaultBox('');
-        $this->printer->defaultBox($e->getTraceAsString());
+        $this->printer->defaultBox($exception->getTraceAsString());
     }
 
     public function setOutputStream($output)

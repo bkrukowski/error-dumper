@@ -57,7 +57,7 @@ class HtmlHelper
                 $result[] = array(
                     'name' => $this->getType($param) . ': unknown[' . $key . ']',
                     'dump' => $dump,
-                    'full' => $this->showFull($param, $dump),
+                    'full' => $this->showFull($param),
                 );
             }
             return $result;
@@ -74,7 +74,7 @@ class HtmlHelper
                     $result[] = array(
                         'name' => $this->getType($param) . ': unknown[' . $key . ']',
                         'dump' => $dump,
-                        'full' => $this->showFull($param, $dump),
+                        'full' => $this->showFull($param),
                     );
                 }
                 return $result;
@@ -94,7 +94,7 @@ class HtmlHelper
                     $result[] = array(
                         'name' => $this->getType($param) . ': unknown[' . $key . ']',
                         'dump' => $dump,
-                        'full' => $this->showFull($param, $dump),
+                        'full' => $this->showFull($param),
                     );
                 }
                 return $result;
@@ -117,7 +117,7 @@ class HtmlHelper
                     $result[] = array(
                         'name' => '...$' . $reflectionParam->getName(),
                         'dump' => $dump,
-                        'full' => $this->showFull($params, $dump),
+                        'full' => $this->showFull($params),
                     );
                 }
                 else
@@ -128,7 +128,7 @@ class HtmlHelper
                         $result[] = array(
                             'name' => $this->getType($param) . ': ...$' . $reflectionParam->getName() . '[' . $i . ']',
                             'dump' => $dump,
-                            'full' => $this->showFull($param, $dump),
+                            'full' => $this->showFull($param),
                         );
                     }
                 }
@@ -140,7 +140,7 @@ class HtmlHelper
             $param = array_shift($params);
             $dump = $this->dump($param);
             $result[] = array(
-                'full' => $this->showFull($param, $dump),
+                'full' => $this->showFull($param),
                 'dump' => $isset ? $dump : '<pre>undefined</pre>',
                 'name' => $this->getType($param) . ': ' . ($reflectionParam->isPassedByReference() ? '&' : '') . '$' . $reflectionParam->getName(),
             );
@@ -152,7 +152,7 @@ class HtmlHelper
             $result[] = array(
                 'dump' => $dump,
                 'name' => $this->getType($param) . ': unknown' . $index++,
-                'full' => $this->showFull($param, $dump),
+                'full' => $this->showFull($param),
             );
         }
         return $result;
@@ -246,7 +246,7 @@ class HtmlHelper
         return implode("\n", $outputLines);
     }
 
-    private function showFull($var, $dump)
+    private function showFull($var)
     {
         if (is_scalar($var) || is_null($var))
         {

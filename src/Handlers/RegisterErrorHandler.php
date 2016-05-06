@@ -60,19 +60,19 @@ class RegisterErrorHandler implements RegisterErrorHandlerInterface
 
     /**
      * This method is public because of supporting php 5.3.
-     * @param $e
+     * @param $exception
      */
-    public function onError($e)
+    public function onError($exception)
     {
-        Exceptions::throwIfIsNotThrowable($e);
-        call_user_func($this->callable, $e);
+        Exceptions::throwIfIsNotThrowable($exception);
+        call_user_func($this->callable, $exception);
     }
 
     private function registerExceptionHandler()
     {
         $self = $this;
-        set_exception_handler(function ($e) use ($self) {
-            $self->onError($e);
+        set_exception_handler(function ($exception) use ($self) {
+            $self->onError($exception);
         });
     }
 

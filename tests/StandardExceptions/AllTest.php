@@ -9,22 +9,22 @@ class AllTest extends TestBase
 {
     /**
      * @dataProvider provider_testSetters
-     * @param FakeException $e
+     * @param FakeException $exception
      * @param $code
      * @param $message
      * @param $file
      * @param $line
      */
-    public function testSetters(FakeException $e, $code, $message, $file, $line)
+    public function testSetters(FakeException $exception, $code, $message, $file, $line)
     {
-        $this->assertSame($e, $e->setCode($code));
-        $this->assertSame($e, $e->setMessage($message));
-        $this->assertSame($e, $e->setFile($file));
-        $this->assertSame($e, $e->setLine($line));
-        $this->assertSame($code, $e->getCode());
-        $this->assertSame($message, $e->getMessage());
-        $this->assertSame($file, $e->getFile());
-        $this->assertSame($line, $e->getLine());
+        $this->assertSame($exception, $exception->setCode($code));
+        $this->assertSame($exception, $exception->setMessage($message));
+        $this->assertSame($exception, $exception->setFile($file));
+        $this->assertSame($exception, $exception->setLine($line));
+        $this->assertSame($code, $exception->getCode());
+        $this->assertSame($message, $exception->getMessage());
+        $this->assertSame($file, $exception->getFile());
+        $this->assertSame($line, $exception->getLine());
     }
 
     public function provider_testSetters()
