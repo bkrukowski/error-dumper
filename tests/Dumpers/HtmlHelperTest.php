@@ -13,11 +13,11 @@ class HtmlHelperTest extends TestBase
     /**
      * @dataProvider provider_test_prepareStep
      * @param HtmlHelper $helper
-     * @param \Exception|\Throwable $e
+     * @param \Exception|\Throwable $exception
      */
-    public function test_prepareStep(HtmlHelper $helper, $e)
+    public function test_prepareStep(HtmlHelper $helper, $exception)
     {
-        foreach ($e->getTrace() as $step)
+        foreach ($exception->getTrace() as $step)
         {
             $colorized = $helper->prepareStep($step);
             $this->assertTrue(is_array($colorized));
@@ -67,11 +67,11 @@ class HtmlHelperTest extends TestBase
 
     private function createExceptionInClosure()
     {
-        $fn = function () {
+        $closure = function () {
             return new \Exception();
         };
 
-        return $fn();
+        return $closure();
     }
 
     private function createExceptionRequireOnce()
