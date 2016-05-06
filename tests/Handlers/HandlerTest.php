@@ -47,23 +47,30 @@ class HandlerTest extends TestBase
         $self = $this;
 
         $fakeException = new FakeException();
-        $e = $fakeException->setMessage($exceptionText);
+        $exception = $fakeException->setMessage($exceptionText);
         $dumper = $this->createDumper();
         $handler = new Handler($dumper);
         /** @var \PHPUnit_Framework_MockObject_MockObject|PreCallbackEvent $preCallback */
         $preCallback = $this->getMockForAbstractClass('ErrorDumper\Handlers\PreCallbackEvent');
-        $preCallback->method('__invoke')->willReturnCallback(function ($currentE) use ($stream, $e, $preText, $break, $preCallback, $self) {
-            $self->assertSame($e, $currentE);
+        $preCallback->method('__invoke')->willReturnCallback(function ($currentE) use (
+            $stream,
+            $exception,
+            $preText,
+            $break,
+            $preCallback,
+            $self
+        ) {
+            $self->assertSame($exception, $currentE);
             fputs($stream, $preText);
             $break && $preCallback->stopDisplay();
         });
         $dumper->setOutputStream($stream);
         $handler->setPreCallback($preCallback);
-        $handler->setPostCallback(function ($currentE) use ($stream, $e, $postText, $self) {
-            $self->assertSame($e, $currentE);
+        $handler->setPostCallback(function ($currentE) use ($stream, $exception, $postText, $self) {
+            $self->assertSame($exception, $currentE);
             fputs($stream, $postText);
         });
-        $handler($e);
+        $handler($exception);
         $this->assertSame($expected, StreamHelper::getContentsFromStream($stream));
     }
 
