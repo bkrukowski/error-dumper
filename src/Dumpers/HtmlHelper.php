@@ -142,7 +142,8 @@ class HtmlHelper
             $result[] = array(
                 'full' => $this->showFull($param),
                 'dump' => $isset ? $dump : '<pre>undefined</pre>',
-                'name' => $this->getType($param) . ': ' . ($reflectionParam->isPassedByReference() ? '&' : '') . '$' . $reflectionParam->getName(),
+                'name' => $this->getType($param) . ': '
+                    . ($reflectionParam->isPassedByReference() ? '&' : '') . '$' . $reflectionParam->getName(),
             );
             $index++;
         }
