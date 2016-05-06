@@ -108,6 +108,7 @@ class HtmlHelper
             /**
              * isVariadic requires at least php 5.6.0
              */
+            // @codeCoverageIgnoreStart
             if (PHPVersion::atLeast('5.6.0') && $reflectionParam->isVariadic())
             {
                 if (empty($params) || count($params) > static::MAX_VARIADIC_ARGS)
@@ -134,6 +135,7 @@ class HtmlHelper
                 $params = array();
                 break;
             }
+            // @codeCoverageIgnoreEnd
             $isset = in_array(0, array_keys($params), true);
             $param = array_shift($params);
             $dump = $this->dump($param);
