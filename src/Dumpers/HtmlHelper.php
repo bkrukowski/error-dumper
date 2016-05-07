@@ -49,7 +49,7 @@ class HtmlHelper
         }
         if (!isset( $step['function'] ) || strpos($step['function'], static::CLOSURE_NAME) !== false)
         {
-            $this->getParametersUnknown($params); # closure
+            return $this->getParametersUnknown($params); # closure
         }
         if (!isset( $step['class'] ))
         {
