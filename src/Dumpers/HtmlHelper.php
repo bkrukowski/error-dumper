@@ -49,35 +49,13 @@ class HtmlHelper
         }
         if (!isset( $step['function'] ) || strpos($step['function'], static::CLOSURE_NAME) !== false)
         {
-            // @codeCoverageIgnoreStart
-            $result = array();
-            foreach ($params as $key => $param)
-            {
-                $dump = $this->dump($param);
-                $result[] = array(
-                    'name' => $this->getType($param) . ': unknown[' . $key . ']',
-                    'dump' => $dump,
-                    'full' => $this->showFull($param),
-                );
-            }
-            return $result;
-            // @codeCoverageIgnoreEnd
+            $this->getParametersUnknown($params); # closure
         }
         if (!isset( $step['class'] ))
         {
             if (!function_exists($step['function'])) # for example include
             {
-                $result = array();
-                foreach ($params as $key => $param)
-                {
-                    $dump = $this->dump($param);
-                    $result[] = array(
-                        'name' => $this->getType($param) . ': unknown[' . $key . ']',
-                        'dump' => $dump,
-                        'full' => $this->showFull($param),
-                    );
-                }
-                return $result;
+                return $this->getParametersUnknown($params);
             }
 
             $function = new \ReflectionFunction($step['function']);
@@ -87,67 +65,16 @@ class HtmlHelper
             $class = new \ReflectionClass($step['class']);
             if (!$class->hasMethod($step['function']))
             {
-                $result = array();
-                foreach ($params as $key => $param)
-                {
-                    $dump = $this->dump($param);
-                    $result[] = array(
-                        'name' => $this->getType($param) . ': unknown[' . $key . ']',
-                        'dump' => $dump,
-                        'full' => $this->showFull($param),
-                    );
-                }
-                return $result;
+                # __call and __callStatic
+                return $this->getParametersUnknown($params);
             }
-            $function = $class->getMethod($step['function']);
-        }
-        $result = array();
-        $index = 0;
-        foreach ($function->getParameters() as $reflectionParam)
-        {
-            /**
-             * isVariadic requires at least php 5.6.0
-             */
-            // @codeCoverageIgnoreStart
-            if (PHPVersion::atLeast('5.6.0') && $reflectionParam->isVariadic())
+            else
             {
-                if (empty($params) || count($params) > static::MAX_VARIADIC_ARGS)
-                {
-                    $dump = $this->dump($params);
-                    $result[] = array(
-                        'name' => '...$' . $reflectionParam->getName(),
-                        'dump' => $dump,
-                        'full' => $this->showFull($params),
-                    );
-                }
-                else
-                {
-                    foreach ($params as $i => $param)
-                    {
-                        $dump = $this->dump($param);
-                        $result[] = array(
-                            'name' => $this->getType($param) . ': ...$' . $reflectionParam->getName() . '[' . $i . ']',
-                            'dump' => $dump,
-                            'full' => $this->showFull($param),
-                        );
-                    }
-                }
-                $params = array();
-                break;
+                $function = $class->getMethod($step['function']);
             }
-            // @codeCoverageIgnoreEnd
-            $isset = in_array(0, array_keys($params), true);
-            $param = array_shift($params);
-            $dump = $this->dump($param);
-            $result[] = array(
-                'full' => $this->showFull($param),
-                'dump' => $isset ? $dump : '<pre>undefined</pre>',
-                'name' => $this->getType($param) . ': '
-                    . ($reflectionParam->isPassedByReference() ? '&' : '') . '$' . $reflectionParam->getName(),
-            );
-            $index++;
         }
-        foreach ($params as $param)
+        list($result, $index, $lastParams) = $this->getParametersForFunction($function, $params);
+        foreach ($lastParams as $param)
         {
             $dump = $this->dump($param);
             $result[] = array(
@@ -278,5 +205,71 @@ class HtmlHelper
         }
 
         return \gettype($var);
+    }
+
+    private function getParametersUnknown($params)
+    {
+        $result = array();
+        foreach ($params as $key => $param)
+        {
+            $dump = $this->dump($param);
+            $result[] = array(
+                'name' => $this->getType($param) . ': unknown[' . $key . ']',
+                'dump' => $dump,
+                'full' => $this->showFull($param),
+            );
+        }
+        return $result;
+    }
+
+    private function getParametersForFunction(\ReflectionFunctionAbstract $function, $params)
+    {
+        $result = array();
+        $index = 0;
+        foreach ($function->getParameters() as $reflectionParam)
+        {
+            /**
+             * isVariadic requires at least php 5.6.0
+             */
+            // @codeCoverageIgnoreStart
+            if (PHPVersion::atLeast('5.6.0') && $reflectionParam->isVariadic())
+            {
+                if (empty($params) || count($params) > static::MAX_VARIADIC_ARGS)
+                {
+                    $dump = $this->dump($params);
+                    $result[] = array(
+                        'name' => '...$' . $reflectionParam->getName(),
+                        'dump' => $dump,
+                        'full' => $this->showFull($params),
+                    );
+                }
+                else
+                {
+                    foreach ($params as $i => $param)
+                    {
+                        $dump = $this->dump($param);
+                        $result[] = array(
+                            'name' => $this->getType($param) . ': ...$' . $reflectionParam->getName() . '[' . $i . ']',
+                            'dump' => $dump,
+                            'full' => $this->showFull($param),
+                        );
+                    }
+                }
+                $params = array();
+                break;
+            }
+            // @codeCoverageIgnoreEnd
+            $isset = in_array(0, array_keys($params), true);
+            $param = array_shift($params);
+            $dump = $this->dump($param);
+            $result[] = array(
+                'full' => $this->showFull($param),
+                'dump' => $isset ? $dump : '<pre>undefined</pre>',
+                'name' => $this->getType($param) . ': '
+                    . ($reflectionParam->isPassedByReference() ? '&' : '') . '$' . $reflectionParam->getName(),
+            );
+            $index++;
+        }
+        return array($result, $index, $params);
     }
 }

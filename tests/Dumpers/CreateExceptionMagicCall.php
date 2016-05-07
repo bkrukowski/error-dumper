@@ -3,8 +3,8 @@
 namespace ErrorDumper\Tests\Dumpers;
 
 /**
- * @method static staticException()
- * @method exception()
+ * @method static staticException($foo, $bar)
+ * @method exception($foo, $bar)
  */
 class CreateExceptionMagicCall
 {
