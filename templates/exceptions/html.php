@@ -101,7 +101,7 @@
     <h2>Message</h2>
     <pre><strong><?php echo $data['exceptionClass']; ?></strong><?php echo isset($data['message']) ? ' ' . $data['message'] : '' ?></pre>
 
-    <h2>Backtrace</h2>
+    <h2>Stack trace</h2>
     <?php foreach ($data['trace'] as $step) { ?>
     <div class="panel panel-default">
         <div class="panel-heading"><?php echo $step['title'] ?></div>
