@@ -204,15 +204,17 @@ class HtmlHelper
                         'dump' => $dump,
                         'full' => $this->showFull($params),
                     );
-                } else {
-                    foreach ($params as $i => $param) {
-                        $dump = $this->dump($param);
-                        $result[] = array(
-                            'name' => $this->getType($param) . ': ...$' . $reflectionParam->getName() . '[' . $i . ']',
-                            'dump' => $dump,
-                            'full' => $this->showFull($param),
-                        );
-                    }
+                    $params = array();
+                    break;
+                }
+
+                foreach ($params as $i => $param) {
+                    $dump = $this->dump($param);
+                    $result[] = array(
+                        'name' => $this->getType($param) . ': ...$' . $reflectionParam->getName() . '[' . $i . ']',
+                        'dump' => $dump,
+                        'full' => $this->showFull($param),
+                    );
                 }
                 $params = array();
                 break;

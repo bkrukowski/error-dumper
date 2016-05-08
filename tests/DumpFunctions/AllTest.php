@@ -11,7 +11,7 @@ use ErrorDumper\Tests\TestBase;
 class AllTest extends TestBase
 {
     /**
-     * @dataProvider provider_test___invoke
+     * @dataProvider providerTestInvoke
      * @param DumpFunctionInterface $dumper
      * @param $data
      */

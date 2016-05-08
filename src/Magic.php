@@ -40,30 +40,19 @@ class Magic
         Editors\EditorInterface $editor = null,
         $errorTypes = RegisterErrorHandler::TYPE_ALL
     ) {
-        $preCallback = null;
-        $postCallback = function () {
+        $dumper = self::createDumperBySapiName($editor);
+        $handler = new Handler($dumper);
+        $handler->setPostCallback(function () {
             exit(1);
-        };
-        if (php_sapi_name() === 'cli') {
-            $dumper = new Dumpers\Cli(fopen('php://output', 'w'));
-            $dumper->setWindowWidthGetter(function () {
-                return (int) exec('tput cols') ? : Dumpers\Cli::EMPHASIS_LENGTH;
-            });
-        } else {
-            is_null($editor) && $editor = new Editors\PhpStorm();
-            $dumper = (new Dumpers\Html($editor, fopen('php://output', 'w')));
-            $preCallback = function () {
+        });
+        if (php_sapi_name() !== 'cli') {
+            $handler->setPreCallback(function () {
                 if (!headers_sent()) {
                     header('HTTP/1.1 503 Service Temporarily Unavailable');
                     header('Status: 503 Service Temporarily Unavailable');
                     header('Retry-After: 300');
                 }
-            };
-        }
-        $handler = new Handler($dumper);
-        $handler->setPostCallback($postCallback);
-        if ($preCallback) {
-            $handler->setPreCallback($preCallback);
+            });
         }
         $registerErrorHandler = new RegisterErrorHandler($handler);
         $registerErrorHandler->register($errorTypes);
@@ -111,5 +100,24 @@ class Magic
         fclose($tmp);
 
         return $result;
+    }
+
+    /**
+     * @param Editors\EditorInterface|null $editor
+     * @return Dumpers\DumperInterface
+     */
+    private static function createDumperBySapiName(Editors\EditorInterface $editor = null)
+    {
+        if (php_sapi_name() ==='cli') {
+            $dumper = new Dumpers\Cli(fopen('php://output', 'w'));
+            $dumper->setWindowWidthGetter(function () {
+                return (int) exec('tput cols') ? : Dumpers\Cli::EMPHASIS_LENGTH;
+            });
+
+            return $dumper;
+        }
+
+        is_null($editor) && $editor = new Editors\PhpStorm();
+        return new Dumpers\Html($editor, fopen('php://output', 'w'));
     }
 }
