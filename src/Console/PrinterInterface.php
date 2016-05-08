@@ -2,6 +2,9 @@
 
 namespace ErrorDumper\Console;
 
+/**
+ * @internal
+ */
 interface PrinterInterface
 {
     /**

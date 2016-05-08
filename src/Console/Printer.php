@@ -2,6 +2,9 @@
 
 namespace ErrorDumper\Console;
 
+/**
+ * @internal
+ */
 class Printer implements PrinterInterface
 {
     const COLOR_BLACK = '0';
