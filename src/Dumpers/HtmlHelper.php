@@ -6,10 +6,19 @@ use ErrorDumper\DumpFunctions\DumpFunctionInterface;
 use ErrorDumper\Editors\CannotGenerateLinkException;
 use ErrorDumper\Editors\EditorInterface;
 use ErrorDumper\Helpers\PHPVersion;
+use ErrorDumper\StackTrace\Step;
+use ErrorDumper\StackTrace\StepInterface;
 
+/**
+ * @internal
+ */
 class HtmlHelper
 {
     const MAX_VARIADIC_ARGS = 5;
+
+    /**
+     * will be removed in new version
+     */
     const CLOSURE_NAME = '{closure}';
 
     private $key = 0;
@@ -40,39 +49,18 @@ class HtmlHelper
         return call_user_func($this->varDump, $var);
     }
 
-    private function prepareColorizedParameters($step)
+    private function prepareColorizedParameters(StepInterface $step)
     {
-        $params = isset($step['args']) ? $step['args'] : array();
+        $params = $step->getArguments();
         if (!$params)
         {
             return array();
         }
-        if (!isset( $step['function'] ) || strpos($step['function'], static::CLOSURE_NAME) !== false)
+        if (!$step->inFunction() || $step->inClosure() || $step->inKeywordFunction() || $step->inMagicCall())
         {
-            return $this->getParametersUnknown($params); # closure
+            return $this->getParametersUnknown($params);
         }
-        if (!isset( $step['class'] ))
-        {
-            if (!function_exists($step['function'])) # for example include
-            {
-                return $this->getParametersUnknown($params);
-            }
-
-            $function = new \ReflectionFunction($step['function']);
-        }
-        else
-        {
-            $class = new \ReflectionClass($step['class']);
-            if (!$class->hasMethod($step['function']))
-            {
-                # __call and __callStatic
-                return $this->getParametersUnknown($params);
-            }
-            else
-            {
-                $function = $class->getMethod($step['function']);
-            }
-        }
+        $function = $step->getFunction();
         list($result, $index, $lastParams) = $this->getParametersForFunction($function, $params);
         foreach ($lastParams as $param)
         {
@@ -88,6 +76,7 @@ class HtmlHelper
 
     public function prepareStep(array $rawStep)
     {
+        $step = new Step($rawStep);
         if (!isset($rawStep['file']))
         {
             $rawStep['file'] = 'empty';
@@ -125,7 +114,7 @@ class HtmlHelper
             'title' => $title,
             'source' => $this->getClassShortContents($rawStep['file'], $rawStep['line']),
             'key' => $this->key++,
-            'arguments' => $this->prepareColorizedParameters($rawStep),
+            'arguments' => $this->prepareColorizedParameters($step),
         );
     }
 
