@@ -86,6 +86,7 @@ class HtmlHelperTest extends TestBase
 
     private function createExceptionReference(&$reference)
     {
+        $reference = 'foo';
         return new \Exception();
     }
 

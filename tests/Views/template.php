@@ -1,1 +1,1 @@
-5 * 5 = <?php echo $data['value']; ?>
+5 * 5 = <?php echo $data['value'];
