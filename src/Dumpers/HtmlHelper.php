@@ -197,25 +197,7 @@ class HtmlHelper
              */
             // @codeCoverageIgnoreStart
             if (PHPVersion::atLeast('5.6.0') && $reflectionParam->isVariadic()) {
-                if (empty($params) || count($params) > static::MAX_VARIADIC_ARGS) {
-                    $dump = $this->dump($params);
-                    $result[] = array(
-                        'name' => '...$' . $reflectionParam->getName(),
-                        'dump' => $dump,
-                        'full' => $this->showFull($params),
-                    );
-                    $params = array();
-                    break;
-                }
-
-                foreach ($params as $i => $param) {
-                    $dump = $this->dump($param);
-                    $result[] = array(
-                        'name' => $this->getType($param) . ': ...$' . $reflectionParam->getName() . '[' . $i . ']',
-                        'dump' => $dump,
-                        'full' => $this->showFull($param),
-                    );
-                }
+                $result = array_merge($result, $this->getVariadicParameters($reflectionParam, $params));
                 $params = array();
                 break;
             }
@@ -232,5 +214,30 @@ class HtmlHelper
             $index++;
         }
         return array($result, $index, $params);
+    }
+
+    private function getVariadicParameters(\ReflectionParameter $reflectionParam, array $params)
+    {
+        $result = array();
+
+        if (empty($params) || count($params) > static::MAX_VARIADIC_ARGS) {
+            $dump = $this->dump($params);
+            $result[] = array(
+                'name' => '...$' . $reflectionParam->getName(),
+                'dump' => $dump,
+                'full' => $this->showFull($params),
+            );
+            return $result;
+        }
+
+        foreach ($params as $i => $param) {
+            $dump = $this->dump($param);
+            $result[] = array(
+                'name' => $this->getType($param) . ': ...$' . $reflectionParam->getName() . '[' . $i . ']',
+                'dump' => $dump,
+                'full' => $this->showFull($param),
+            );
+        }
+        return $result;
     }
 }
