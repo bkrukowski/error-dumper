@@ -27,7 +27,7 @@ class AllTest extends TestBase
         $this->assertSame($line, $exception->getLine());
     }
 
-    public function provider_testSetters()
+    public function providerTestSetters()
     {
         $result = array();
         $classes = array('FakeException', 'FatalErrorException', 'ShutdownErrorException');
