@@ -19,16 +19,13 @@ class Autoload
 
     public function __invoke($className)
     {
-        foreach ($this->namespaces as $data)
-        {
+        foreach ($this->namespaces as $data) {
             list($namespace, $dir) = $data;
-            if (strpos($className, $namespace . '\\') === 0)
-            {
+            if (strpos($className, $namespace . '\\') === 0) {
                 $filename = $dir . substr($className, strlen($namespace)) . '.php';
                 $filename = str_replace('\\', DIRECTORY_SEPARATOR, $filename);
 
-                if (is_file($filename))
-                {
+                if (is_file($filename)) {
                     require_once $filename;
 
                     return true;
@@ -42,8 +39,7 @@ class Autoload
     public static function init()
     {
         static $inited = false;
-        if (!$inited)
-        {
+        if (!$inited) {
             new static();
             $inited = true;
         }

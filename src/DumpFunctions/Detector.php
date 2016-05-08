@@ -12,8 +12,7 @@ class Detector
      */
     public static function createDetectedVarDumper()
     {
-        if (class_exists(static::SYMFONY_COMPONENT_CLASS, true))
-        {
+        if (class_exists(static::SYMFONY_COMPONENT_CLASS, true)) {
             return new SymfonyVarDumper();
         }
 

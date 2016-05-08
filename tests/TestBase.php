@@ -7,8 +7,7 @@ abstract class TestBase extends \PHPUnit_Framework_TestCase
     protected function prepareDataProvider(array $data)
     {
         $result = array();
-        foreach ($data as $key => $value)
-        {
+        foreach ($data as $key => $value) {
             $result[$key . ' ' . phpversion()] = $value;
         }
 

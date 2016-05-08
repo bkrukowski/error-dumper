@@ -13,7 +13,7 @@ use ErrorDumper\Tests\TestBase;
 class HtmlTest extends TestBase
 {
     /**
-     * @dataProvider provider_testAll
+     * @dataProvider providerTestAll
      * @param EditorInterface $editor
      */
     public function testAll(EditorInterface $editor)
@@ -43,7 +43,7 @@ class HtmlTest extends TestBase
         $this->assertTrue($used);
     }
 
-    public function provider_testAll()
+    public function providerTestAll()
     {
         $data = array(
             array(new PhpStorm()),

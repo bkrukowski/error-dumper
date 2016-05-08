@@ -35,8 +35,10 @@ class HandlerTest extends TestBase
             $handler->setDumper($mock2)
         );
         $this->assertSame($mock2, $handler->getDumper());
-        $this->assertSame($handler, $handler->setPostCallback(function () {}));
-        $this->assertSame($handler, $handler->setPreCallback(function () {}));
+        $this->assertSame($handler, $handler->setPostCallback(function () {
+        }));
+        $this->assertSame($handler, $handler->setPreCallback(function () {
+        }));
     }
 
     /**

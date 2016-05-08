@@ -29,8 +29,7 @@ class RegisterErrorHandler implements RegisterErrorHandlerInterface
      */
     public function __construct($callable, $mode = null)
     {
-        if (is_null($mode))
-        {
+        if (is_null($mode)) {
             $mode = E_STRICT | E_ALL;
         }
         $this->setCallable($callable);
@@ -94,8 +93,7 @@ class RegisterErrorHandler implements RegisterErrorHandlerInterface
     {
         $self = $this;
         register_shutdown_function(function () use ($self) {
-            if ($error = error_get_last())
-            {
+            if ($error = error_get_last()) {
                 $exception = new ShutdownErrorException();
                 $exception
                     ->setFile($error['file'])

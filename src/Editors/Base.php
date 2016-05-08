@@ -8,8 +8,7 @@ abstract class Base implements EditorInterface
 
     public function createLinkToFile($file, $line)
     {
-        if (!$line)
-        {
+        if (!$line) {
             return '';
         }
 
@@ -29,8 +28,7 @@ abstract class Base implements EditorInterface
     private function convertPath($path)
     {
         $result = $path;
-        foreach ($this->mapping as $from => $to)
-        {
+        foreach ($this->mapping as $from => $to) {
             $pattern = '#^' . preg_quote($from, '#') . '#';
             $result = preg_replace($pattern, $to, $result);
         }

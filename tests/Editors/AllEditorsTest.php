@@ -11,19 +11,19 @@ use ErrorDumper\Tests\TestBase;
 class AllEditorsTest extends TestBase
 {
     /**
-     * @dataProvider provider_test_createLinkToFile
+     * @dataProvider providerTestCreateLinkToFile
      * @param EditorInterface $editor
      * @param $file
      * @param $line
      */
-    public function test_createLinkToFile(EditorInterface $editor, $file, $line)
+    public function testCreateLinkToFile(EditorInterface $editor, $file, $line)
     {
         $link = $editor->createLinkToFile($file, $line);
         $this->assertTrue(is_string($link));
         $this->assertContains((string) $line, $link);
     }
 
-    public function provider_test_createLinkToFile()
+    public function providerTestCreateLinkToFile()
     {
         return $this->prepareDataProvider(array(
             array(new MacVim(), __FILE__, __LINE__),
@@ -34,13 +34,15 @@ class AllEditorsTest extends TestBase
     }
 
     /**
-     * @dataProvider provider_test_registerDirectoryMap
+     * @dataProvider providerTestRegisterDirectoryMap
      * @param EditorInterface $editor
+     * @param $from
+     * @param $to
      * @param $file
      * @param $line
      * @param $expectedResultFile
      */
-    public function test_registerDirectoryMap(EditorInterface $editor, $from, $to, $file, $line, $expectedResultFile)
+    public function testRegisterDirectoryMap(EditorInterface $editor, $from, $to, $file, $line, $expectedResultFile)
     {
         $editor->registerDirectoryMap($from, $to);
         $link = $editor->createLinkToFile($file, $line);
@@ -50,15 +52,14 @@ class AllEditorsTest extends TestBase
         $this->assertSame($expectedResultFile, $data['file']);
     }
 
-    public function provider_test_registerDirectoryMap()
+    public function providerTestRegisterDirectoryMap()
     {
         $from = '/var/www';
         $to = '~/projects/error-dumper';
         $suffix = '/foo/bar/foobar.php';
 
         $result = array();
-        foreach (array('PhpStorm', 'MacVim', 'TextMate') as $class)
-        {
+        foreach (array('PhpStorm', 'MacVim', 'TextMate') as $class) {
             $class = 'ErrorDumper\Editors\\' . $class;
             /** @var EditorInterface $editor */
             $editor = new $class();

@@ -50,14 +50,12 @@ class Step implements StepInterface
 
     public function getFunction()
     {
-        if ($this->inClass() && !$this->inMagicCall())
-        {
+        if ($this->inClass() && !$this->inMagicCall()) {
             $class = new \ReflectionClass($this->rawStep['class']);
             return $class->getMethod($this->rawStep['function']);
         }
 
-        if (!$this->inClass() && !$this->inKeywordFunction() && !$this->inClosure() && $this->inFunction())
-        {
+        if (!$this->inClass() && !$this->inKeywordFunction() && !$this->inClosure() && $this->inFunction()) {
             return new \ReflectionFunction($this->rawStep['function']);
         }
 

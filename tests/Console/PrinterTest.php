@@ -9,7 +9,7 @@ use ErrorDumper\Tests\TestBase;
 class PrinterTest extends TestBase
 {
     /**
-     * @dataProvider provider_testMessageBox
+     * @dataProvider providerTestMessageBox
      * @param $functionName
      */
     public function testMessageBox($functionName)
@@ -21,7 +21,7 @@ class PrinterTest extends TestBase
         $this->assertContains($text, Stream::getContentsFromStream($stream));
     }
 
-    public function provider_testMessageBox()
+    public function providerTestMessageBox()
     {
         $data = array(
             'errorBox' => array('errorBox'),
@@ -33,7 +33,7 @@ class PrinterTest extends TestBase
         return $this->prepareDataProvider($data);
     }
 
-    public function test_setOutputStream()
+    public function testSetOutputStream()
     {
         $firstStream = tmpfile();
         $secondStream = tmpfile();

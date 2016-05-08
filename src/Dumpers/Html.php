@@ -65,8 +65,7 @@ class Html extends Base
             'file' => $exception->getFile(),
             'line' => $exception->getLine(),
         ));
-        foreach ($exception->getTrace() as $rawStep)
-        {
+        foreach ($exception->getTrace() as $rawStep) {
             $vars['trace'][] = $helper->prepareStep($rawStep);
         }
         $template = new Template();

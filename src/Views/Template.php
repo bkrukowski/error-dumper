@@ -2,6 +2,9 @@
 
 namespace ErrorDumper\Views;
 
+/**
+ * @internal
+ */
 class Template implements TemplateInterface
 {
     private $rootDirectory;
@@ -14,8 +17,7 @@ class Template implements TemplateInterface
     public function render($path, array $data = array())
     {
         // @codeCoverageIgnoreStart
-        if (DIRECTORY_SEPARATOR !== '/')
-        {
+        if (DIRECTORY_SEPARATOR !== '/') {
             $path = str_replace('/', DIRECTORY_SEPARATOR, $path);
         }
         // @codeCoverageIgnoreStop

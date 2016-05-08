@@ -15,19 +15,19 @@ class AllTest extends TestBase
      * @param DumpFunctionInterface $dumper
      * @param $data
      */
-    public function test___invoke(DumpFunctionInterface $dumper, $data)
+    public function testInvoke(DumpFunctionInterface $dumper, $data)
     {
         $this->assertTrue(is_string($dumper($data)));
     }
 
-    public function provider_test___invoke()
+    public function providerTestInvoke()
     {
-        $data = array(new \stdClass(), $this,  function () {}, range(1, 1000), tmpfile(), null, array());
+        $function = function () {
+        };
+        $data = array(new \stdClass(), $this, $function, range(1, 1000), tmpfile(), null, array());
         $result = array();
-        foreach (array(new LightVarDumper(), new InternalVarDumper(), new NothingVarDumper()) as $dumper)
-        {
-            foreach ($data as $var)
-            {
+        foreach (array(new LightVarDumper(), new InternalVarDumper(), new NothingVarDumper()) as $dumper) {
+            foreach ($data as $var) {
                 $result[] = array($dumper, $var);
             }
         }

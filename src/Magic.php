@@ -39,26 +39,21 @@ class Magic
     public static function registerErrorDumper(
         Editors\EditorInterface $editor = null,
         $errorTypes = RegisterErrorHandler::TYPE_ALL
-    )
-    {
+    ) {
         $preCallback = null;
         $postCallback = function () {
             exit(1);
         };
-        if (php_sapi_name() === 'cli')
-        {
+        if (php_sapi_name() === 'cli') {
             $dumper = new Dumpers\Cli(fopen('php://output', 'w'));
             $dumper->setWindowWidthGetter(function () {
                 return (int) exec('tput cols') ? : Dumpers\Cli::EMPHASIS_LENGTH;
             });
-        }
-        else
-        {
+        } else {
             is_null($editor) && $editor = new Editors\PhpStorm();
             $dumper = (new Dumpers\Html($editor, fopen('php://output', 'w')));
             $preCallback = function () {
-                if (!headers_sent())
-                {
+                if (!headers_sent()) {
                     header('HTTP/1.1 503 Service Temporarily Unavailable');
                     header('Status: 503 Service Temporarily Unavailable');
                     header('Retry-After: 300');
@@ -67,8 +62,7 @@ class Magic
         }
         $handler = new Handler($dumper);
         $handler->setPostCallback($postCallback);
-        if ($preCallback)
-        {
+        if ($preCallback) {
             $handler->setPreCallback($preCallback);
         }
         $registerErrorHandler = new RegisterErrorHandler($handler);
@@ -103,14 +97,12 @@ class Magic
         $exception,
         Editors\EditorInterface $editor = null,
         DumpFunctionInterface $varDumper = null
-    )
-    {
+    ) {
         Exceptions::throwIfIsNotThrowable($exception);
         is_null($editor) && $editor = new Editors\Nothing();
         $tmp = tmpfile();
         $dumper = new Dumpers\Html($editor, $tmp);
-        if (is_null($varDumper))
-        {
+        if (is_null($varDumper)) {
             $varDumper = new LightVarDumper();
         }
         $dumper->setVarDumpFn($varDumper);

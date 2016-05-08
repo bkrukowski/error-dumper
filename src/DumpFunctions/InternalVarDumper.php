@@ -12,6 +12,6 @@ class InternalVarDumper implements DumpFunctionInterface
         ob_end_clean();
         $xdebugIsLoaded = extension_loaded('xdebug');
 
-        return ($xdebugIsLoaded ? '' : '<pre>' ) . $result . ($xdebugIsLoaded ? '' : '</pre>');
+        return ($xdebugIsLoaded ? '' : '<pre>') . $result . ($xdebugIsLoaded ? '' : '</pre>');
     }
 }

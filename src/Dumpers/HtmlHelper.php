@@ -52,18 +52,15 @@ class HtmlHelper
     private function prepareColorizedParameters(StepInterface $step)
     {
         $params = $step->getArguments();
-        if (!$params)
-        {
+        if (!$params) {
             return array();
         }
-        if (!$step->inFunction() || $step->inClosure() || $step->inKeywordFunction() || $step->inMagicCall())
-        {
+        if (!$step->inFunction() || $step->inClosure() || $step->inKeywordFunction() || $step->inMagicCall()) {
             return $this->getParametersUnknown($params);
         }
         $function = $step->getFunction();
         list($result, $index, $lastParams) = $this->getParametersForFunction($function, $params);
-        foreach ($lastParams as $param)
-        {
+        foreach ($lastParams as $param) {
             $dump = $this->dump($param);
             $result[] = array(
                 'dump' => $dump,
@@ -77,37 +74,29 @@ class HtmlHelper
     public function prepareStep(array $rawStep)
     {
         $step = new Step($rawStep);
-        if (!isset($rawStep['file']))
-        {
+        if (!isset($rawStep['file'])) {
             $rawStep['file'] = 'empty';
         }
-        if (!isset($rawStep['line']))
-        {
+        if (!isset($rawStep['line'])) {
             $rawStep['line'] = 0;
         }
         $title = "{$rawStep['file']}:{$rawStep['line']} <strong>";
-        if (!empty($rawStep['class']))
-        {
+        if (!empty($rawStep['class'])) {
             $title .= $rawStep['class'];
         }
-        if (!empty($rawStep['type']))
-        {
+        if (!empty($rawStep['type'])) {
             $title .= $rawStep['type'];
         }
-        if (!empty($rawStep['function']))
-        {
+        if (!empty($rawStep['function'])) {
             $title .= $rawStep['function'] . '()';
         }
         $title .= "</strong>";
 
-        try
-        {
+        try {
             $link = $this->editor->createLinkToFile($rawStep['file'], $rawStep['line']);
             $link = htmlspecialchars($link);
             $title = "<a href='{$link}'>{$title}</a>";
-        }
-        catch(CannotGenerateLinkException $e)
-        {
+        } catch (CannotGenerateLinkException $e) {
         }
 
         return array(
@@ -120,43 +109,36 @@ class HtmlHelper
 
     private function getClassShortContents($filename, $line)
     {
-        if (!$line || !is_file($filename))
-        {
+        if (!$line || !is_file($filename)) {
             return "File does not exists {$filename}:{$line}.";
         }
         $lines = explode("\n", file_get_contents($filename));
         $countLines = count($lines);
         $maxDiff = 7;
         $from = $line - $maxDiff - 1;
-        if ($from < 0)
-        {
+        if ($from < 0) {
             $from = 0;
         }
         $to = $line + $maxDiff;
-        if ($to > $countLines)
-        {
+        if ($to > $countLines) {
             $to = $countLines;
         }
         $maxStrLen = strlen($to) + 4;
         $outputLines = array_slice($lines, $from, $maxDiff*2+1, true);
-        foreach ($outputLines as $key => &$currentLine)
-        {
+        foreach ($outputLines as $key => &$currentLine) {
             $currentLine = str_replace("\t", '    ', $currentLine);
             $currentLineNumber = $key + 1;
 
-            try
-            {
+            try {
                 $lineLink = $this->editor->createLinkToFile($filename, $currentLineNumber);
                 $lineLink = htmlspecialchars($lineLink);
                 $lineTag = "<a href='{$lineLink}'>#{$currentLineNumber}</a>";
-            }
-            catch (CannotGenerateLinkException $e)
-            {
+            } catch (CannotGenerateLinkException $e) {
                 $lineTag = '#' . $currentLineNumber;
             }
 
             $currentLine = $lineTag
-                . str_pad('',  $maxStrLen - strlen($currentLineNumber), ' ')
+                . str_pad('', $maxStrLen - strlen($currentLineNumber), ' ')
                 . htmlspecialchars($currentLine);
         }
         $outputLines[$line-1] = '<span class="error-line">' . $outputLines[$line-1] . '</span>';
@@ -165,16 +147,13 @@ class HtmlHelper
 
     private function showFull($var)
     {
-        if (is_scalar($var) || is_null($var))
-        {
-            if (!is_string($var) || strlen($var) <= 30)
-            {
+        if (is_scalar($var) || is_null($var)) {
+            if (!is_string($var) || strlen($var) <= 30) {
                 return true;
             }
         }
 
-        if (is_array($var) && count($var) <= 10)
-        {
+        if (is_array($var) && count($var) <= 10) {
             return true;
         }
 
@@ -183,13 +162,11 @@ class HtmlHelper
 
     private function getType($var)
     {
-        if (is_object($var))
-        {
+        if (is_object($var)) {
             return '<strong>' . get_class($var) . '</strong>';
         }
 
-        if (is_array($var))
-        {
+        if (is_array($var)) {
             return 'array(' . count($var) . ')';
         }
 
@@ -199,8 +176,7 @@ class HtmlHelper
     private function getParametersUnknown($params)
     {
         $result = array();
-        foreach ($params as $key => $param)
-        {
+        foreach ($params as $key => $param) {
             $dump = $this->dump($param);
             $result[] = array(
                 'name' => $this->getType($param) . ': unknown[' . $key . ']',
@@ -215,27 +191,21 @@ class HtmlHelper
     {
         $result = array();
         $index = 0;
-        foreach ($function->getParameters() as $reflectionParam)
-        {
+        foreach ($function->getParameters() as $reflectionParam) {
             /**
              * isVariadic requires at least php 5.6.0
              */
             // @codeCoverageIgnoreStart
-            if (PHPVersion::atLeast('5.6.0') && $reflectionParam->isVariadic())
-            {
-                if (empty($params) || count($params) > static::MAX_VARIADIC_ARGS)
-                {
+            if (PHPVersion::atLeast('5.6.0') && $reflectionParam->isVariadic()) {
+                if (empty($params) || count($params) > static::MAX_VARIADIC_ARGS) {
                     $dump = $this->dump($params);
                     $result[] = array(
                         'name' => '...$' . $reflectionParam->getName(),
                         'dump' => $dump,
                         'full' => $this->showFull($params),
                     );
-                }
-                else
-                {
-                    foreach ($params as $i => $param)
-                    {
+                } else {
+                    foreach ($params as $i => $param) {
                         $dump = $this->dump($param);
                         $result[] = array(
                             'name' => $this->getType($param) . ': ...$' . $reflectionParam->getName() . '[' . $i . ']',

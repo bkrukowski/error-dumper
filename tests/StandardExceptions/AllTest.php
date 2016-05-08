@@ -31,13 +31,11 @@ class AllTest extends TestBase
     {
         $result = array();
         $classes = array('FakeException', 'FatalErrorException', 'ShutdownErrorException');
-        foreach ($classes as $class)
-        {
+        foreach ($classes as $class) {
             $class = 'ErrorDumper\StandardExceptions\\' . $class;
             /** @var FakeException $e */
             $e = new $class;
-            for ($i = 0; $i < 10; $i++)
-            {
+            for ($i = 0; $i < 10; $i++) {
                 $result[] = array(
                     $e,
                     mt_rand(0, PHP_INT_MAX),

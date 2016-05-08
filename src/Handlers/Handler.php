@@ -62,21 +62,16 @@ class Handler implements HandlerInterface
     {
         Exceptions::throwIfIsNotThrowable($exception);
         $pre = $this->preCallback;
-        if (!empty($pre))
-        {
-            try
-            {
+        if (!empty($pre)) {
+            try {
                 call_user_func($pre, $exception);
-            }
-            catch (StopDisplayException $stopE)
-            {
+            } catch (StopDisplayException $stopE) {
                 return;
             }
         }
         $this->dumper->displayException($exception);
         $post = $this->postCallback;
-        if (!empty($post))
-        {
+        if (!empty($post)) {
             call_user_func($post, $exception);
         }
     }

@@ -3,6 +3,7 @@
 namespace ErrorDumper\Helpers;
 
 /**
+ * @internal
  * @codeCoverageIgnore
  */
 class PHPVersion

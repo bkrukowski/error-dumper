@@ -8,16 +8,16 @@ use ErrorDumper\Tests\TestBase;
 class StepTest extends TestBase
 {
     /**
-     * @dataProvider provider_test_inFunction
+     * @dataProvider providerTestInFunction
      * @param Step $step
      * @param bool $inFunction
      */
-    public function test_inFunction(Step $step, $inFunction)
+    public function testInFunction(Step $step, $inFunction)
     {
         $this->assertSame($inFunction, $step->inFunction());
     }
 
-    public function provider_test_inFunction()
+    public function providerTestInFunction()
     {
         return array(
             array(new Step(array()), false),
@@ -26,16 +26,16 @@ class StepTest extends TestBase
     }
 
     /**
-     * @dataProvider provider_test_inClosure
+     * @dataProvider providerTestInClosure
      * @param Step $step
      * @param bool $inClosure
      */
-    public function test_inClosure(Step $step, $inClosure)
+    public function testInClosure(Step $step, $inClosure)
     {
         $this->assertSame($inClosure, $step->inClosure());
     }
 
-    public function provider_test_inClosure()
+    public function providerTestInClosure()
     {
         return array(
             array(new Step(array()), false),
@@ -45,16 +45,16 @@ class StepTest extends TestBase
     }
 
     /**
-     * @dataProvider provider_test_inKeywordFunction
+     * @dataProvider providerTestInKeywordFunction
      * @param Step $step
      * @param bool $inKeyword
      */
-    public function test_inKeywordFunction(Step $step, $inKeyword)
+    public function testInKeywordFunction(Step $step, $inKeyword)
     {
         $this->assertSame($inKeyword, $step->inKeywordFunction());
     }
 
-    public function provider_test_inKeywordFunction()
+    public function providerTestInKeywordFunction()
     {
         return array(
             array(new Step(array('function' => 'include')), true),
@@ -66,14 +66,14 @@ class StepTest extends TestBase
     /**
      * @param Step $step
      * @param bool $inClass
-     * @dataProvider provider_test_inClass
+     * @dataProvider providerTestInClass
      */
-    public function test_inClass(Step $step, $inClass)
+    public function testInClass(Step $step, $inClass)
     {
         $this->assertSame($inClass, $step->inClass());
     }
 
-    public function provider_test_inClass()
+    public function providerTestInClass()
     {
         return array(
             array(new Step(array('class' => __CLASS__)), true),
@@ -83,16 +83,16 @@ class StepTest extends TestBase
     }
 
     /**
-     * @dataProvider provider_test_inMagicCall
+     * @dataProvider providerTestInMagicCall
      * @param Step $step
      * @param bool $inCallMethod
      */
-    public function test_inMagicCall(Step $step, $inCallMethod)
+    public function testInMagicCall(Step $step, $inCallMethod)
     {
         $this->assertSame($inCallMethod, $step->inMagicCall());
     }
 
-    public function provider_test_inMagicCall()
+    public function providerTestInMagicCall()
     {
         return array(
             array(new Step(array('class' => __CLASS__, 'function' => 'does_not_exist')), true),
@@ -101,7 +101,7 @@ class StepTest extends TestBase
         );
     }
 
-    public function test_getArguments()
+    public function testGetArguments()
     {
         $noArguments = new Step(array());
         $this->assertEmpty($noArguments->getArguments());
@@ -117,7 +117,7 @@ class StepTest extends TestBase
     /**
      * @expectedException \ErrorDumper\StackTrace\NoFunctionException
      */
-    public function test_getFunction()
+    public function testGetFunction()
     {
         $method = new Step(array(
             'class' => __CLASS__,

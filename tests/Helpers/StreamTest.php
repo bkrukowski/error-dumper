@@ -6,7 +6,7 @@ use ErrorDumper\Helpers\Stream;
 
 class StreamTest extends \PHPUnit_Framework_TestCase
 {
-    public function test_getContentsFromStream()
+    public function testGetContentsFromStream()
     {
         $stream  = tmpfile();
         fputs($stream, __CLASS__);

@@ -2,6 +2,9 @@
 
 namespace ErrorDumper\Views;
 
+/**
+ * @internal
+ */
 interface TemplateInterface
 {
     /**
