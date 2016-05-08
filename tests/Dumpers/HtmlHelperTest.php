@@ -30,19 +30,20 @@ class HtmlHelperTest extends TestBase
     public function providerTestPrepareStep()
     {
         $reference = 5;
+        $exceptionsHelper = new HtmlHelperExceptions();
         $exceptions = array(
-            $this->createException(),
-            $this->createException('not defined in method definition'),
-            $this->createExceptionInClosure(),
-            $this->createExceptionRequireOnce(),
-            $this->createExceptionInclude(),
-            $this->createExceptionReference($reference),
-            $this->createExceptionMagicCall(),
-            $this->createExceptionMagicStaticCall(),
+            $exceptionsHelper->createException(),
+            $exceptionsHelper->createException('not defined in method definition'),
+            $exceptionsHelper->createExceptionInClosure(),
+            $exceptionsHelper->createExceptionRequireOnce(),
+            $exceptionsHelper->createExceptionInclude(),
+            $exceptionsHelper->createExceptionReference($reference),
+            $exceptionsHelper->createExceptionMagicCall(),
+            $exceptionsHelper->createExceptionMagicStaticCall(),
         );
         if (PHPVersion::atLeast('5.6.0')) {
-            $exceptions[] = $this->createExceptionVariadicParams();
-            $exceptions[] = $this->createExceptionVariadicParams2();
+            $exceptions[] = $exceptionsHelper->createExceptionVariadicParams();
+            $exceptions[] = $exceptionsHelper->createExceptionVariadicParams2();
         }
 
         $result = array();
@@ -54,56 +55,5 @@ class HtmlHelperTest extends TestBase
         }
 
         return $this->prepareDataProvider($result);
-    }
-
-    private function createException()
-    {
-        return new \Exception();
-    }
-
-    private function createExceptionInClosure()
-    {
-        $closure = function () {
-            return new \Exception();
-        };
-
-        return $closure();
-    }
-
-    private function createExceptionRequireOnce()
-    {
-        return require_once __DIR__ . DIRECTORY_SEPARATOR . 'getException.inc.php';
-    }
-
-    private function createExceptionInclude()
-    {
-        return include __DIR__ . DIRECTORY_SEPARATOR . 'getException.inc.php';
-    }
-
-    private function createExceptionReference(&$reference)
-    {
-        $reference = 'foo';
-        return new \Exception();
-    }
-
-    private function createExceptionVariadicParams()
-    {
-        return CreateExceptionVariadic::createException();
-    }
-
-    private static function createExceptionVariadicParams2()
-    {
-        return CreateExceptionVariadic::createException2();
-    }
-
-    private function createExceptionMagicCall()
-    {
-        $obj = new CreateExceptionMagicCall();
-        return $obj->exception('foo', 'bar');
-    }
-
-    public static function createExceptionMagicStaticCall()
-    {
-        return CreateExceptionMagicCall::staticException('foo', 'bar');
     }
 }
