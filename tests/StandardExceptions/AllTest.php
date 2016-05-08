@@ -8,7 +8,7 @@ use ErrorDumper\Tests\TestBase;
 class AllTest extends TestBase
 {
     /**
-     * @dataProvider provider_testSetters
+     * @dataProvider providerTestSetters
      * @param FakeException $exception
      * @param $code
      * @param $message
