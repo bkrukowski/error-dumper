@@ -17,7 +17,8 @@
     "phpunit/phpcov": "2.*",
     "phpmd/phpmd": "@stable",
     "squizlabs/php_codesniffer": "@stable",
-    "fabpot/php-cs-fixer": "@stable"
+    "fabpot/php-cs-fixer": "@stable",
+    "codacy/coverage": "~1.0.3"
   },
   "suggest": {
     "symfony/var-dumper": "Pretty var_dump without xdebug."
