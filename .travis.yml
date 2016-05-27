@@ -4,7 +4,7 @@ install:
   - curl -s http://getcomposer.org/installer | php
   - php -r 'echo ini_get("memory_limit") . "\n";'
   - php composer.phar config -g github-protocols https
-  - travis_wait php -d memory_limit=1024M -dzend_extension=xdebug.so composer.phar install --dev --prefer-dist --profile
+  - travis_wait php -d memory_limit=2G -dzend_extension=xdebug.so composer.phar install --dev --prefer-dist --profile
   - mkdir -p build/logs
 
 php:
