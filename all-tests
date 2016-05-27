@@ -56,7 +56,6 @@ function runTestsFor()
     echo 'Executing tests...'
     php$version "php-versions/$version/bin/phpunit" tests \
         --bootstrap "php-versions/$version/autoload.php" \
-        --coverage-php build/logs/php-$version.cov \
         --colors=auto
     echo ""
 }
@@ -103,6 +102,3 @@ else
     echo ""
     runTestsForAll
 fi
-
-echo 'Merging *.cov files'
-./php-versions/$LAST_VERSION/phpunit/phpcov/phpcov merge --html build/logs/html build/logs > /dev/null 2>&1
