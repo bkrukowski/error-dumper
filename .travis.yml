@@ -2,7 +2,7 @@ language: php
 
 install:
   - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev --prefer-dist
+  - php composer.phar install --dev --prefer-dist --profile
   - mkdir -p build/logs
 
 php:
