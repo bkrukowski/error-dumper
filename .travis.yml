@@ -2,6 +2,7 @@ language: php
 
 install:
   - curl -s http://getcomposer.org/installer | php
+  _ php composer.phar config -g github-protocols https
   - travis_wait php -dzend_extension=xdebug.so composer.phar install --dev --prefer-dist --profile
   - mkdir -p build/logs
 
