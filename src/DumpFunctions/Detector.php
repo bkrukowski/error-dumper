@@ -2,6 +2,9 @@
 
 namespace ErrorDumper\DumpFunctions;
 
+/**
+ * @deprecated
+ */
 class Detector
 {
     const SYMFONY_COMPONENT_CLASS = 'Symfony\Component\VarDumper\Dumper\HtmlDumper';
