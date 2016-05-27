@@ -2,7 +2,8 @@ language: php
 
 install:
   - curl -s http://getcomposer.org/installer | php
-  - php composer.phar config -g github-protocols https
+  - php -r 'echo ini_get("memory_limit") . "\n";'
+  - php -d memory_limit=1024M composer.phar config -g github-protocols https
   - travis_wait php -dzend_extension=xdebug.so composer.phar install --dev --prefer-dist --profile
   - mkdir -p build/logs
 
