@@ -33,23 +33,23 @@ function runTestsFor()
     local version=$1
     LAST_VERSION=$version
     printHeader "PHP $version"
-    versionDir="$BASE_DIR/php-versions/$version"
+    versionDir="$BASE_DIR/build/php-versions/$version"
     mkdir -p $versionDir
-    if [ ! -f "$BASE_DIR/php-versions/$version/autoload.php" ]; then
+    if [ ! -f "$BASE_DIR/build/php-versions/$version/autoload.php" ]; then
         cd $versionDir
         echo 'Installing composer.phar...'
         curl -s http://getcomposer.org/installer | php$version 1>/dev/null
         cd $BASE_DIR
 
         echo 'Updating dependencies...'
-        $BASE_DIR/php-versions/$version/composer.phar config vendor-dir "php-versions/$version"
+        $BASE_DIR/build/php-versions/$version/composer.phar config vendor-dir "build/php-versions/$version"
         php$version "$versionDir/composer.phar" update
-        $BASE_DIR/php-versions/$version/composer.phar config --unset vendor-dir
+        $BASE_DIR/build/php-versions/$version/composer.phar config --unset vendor-dir
         rm $BASE_DIR/composer.lock
     fi
     echo 'Executing tests...'
-    php$version "php-versions/$version/bin/phpunit" tests \
-        --bootstrap "php-versions/$version/autoload.php" \
+    php$version "build/php-versions/$version/bin/phpunit" tests \
+        --bootstrap "build/php-versions/$version/autoload.php" \
         --colors=auto
     echo ""
 }
