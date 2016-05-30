@@ -5,12 +5,6 @@ set -e
 BASE_DIR=$(pwd)
 LAST_VERSION='none'
 
-function initProject()
-{
-    rm -rf build
-    mkdir -p build/logs
-}
-
 function resetTextStyle()
 {
     tput sgr0
@@ -80,8 +74,6 @@ then
     echo ""
     exit 0
 fi
-
-initProject
 
 if [ -n "$1" ]
 then
