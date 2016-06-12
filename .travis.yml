@@ -16,6 +16,7 @@ php:
   - nightly
 
 script:
+  - php -r 'echo phpversion() . "\n";'
   - ./vendor/bin/phpunit tests --coverage-clover ./build/logs/clover.xml
 
 after_script:
