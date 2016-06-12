@@ -2,7 +2,7 @@ language: php
 
 install:
   - curl -s http://getcomposer.org/installer | php
-  - php -r 'echo ini_get("memory_limit") . "\n";'
+  - echo $(php -r 'echo ini_get("memory_limit");')
   - travis_wait php -n -d memory_limit=2G composer.phar install --profile
   - mkdir -p build/logs
 
@@ -16,7 +16,7 @@ php:
   - nightly
 
 script:
-  - php -r 'echo phpversion() . "\n";'
+  - echo $(php -r 'echo phpversion();')
   - ./vendor/bin/phpunit tests --coverage-clover ./build/logs/clover.xml
 
 after_script:
