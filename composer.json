@@ -2,6 +2,7 @@
   "name": "bkrukowski/error-dumper",
   "description": "Pretty errors and exceptions in PHP.",
   "license": "MIT",
+  "keywords": ["utility", "debug", "exceptions", "errors"],
   "authors": [
     {
       "name": "Bartłomiej Krukowski",
