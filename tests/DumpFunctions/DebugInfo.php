@@ -8,8 +8,8 @@ class DebugInfo
 {
     public function __debugInfo()
     {
-        return [
+        return array(
             'key' => 'value',
-        ];
+        );
     }
 }
