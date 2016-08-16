@@ -1,5 +1,5 @@
 <?php
-namespace ErrorDumper\TestsDumpFunctions;
+namespace ErrorDumper\Tests\DumpFunctions;
 
 /**
  * @internal

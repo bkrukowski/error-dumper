@@ -1,6 +1,6 @@
 <?php
 
-namespace ErrorDumper\TestsDumpFunctions;
+namespace ErrorDumper\Tests\DumpFunctions;
 
 use ErrorDumper\DumpFunctions\DumpFunctionInterface;
 use ErrorDumper\DumpFunctions\InternalVarDumper;
