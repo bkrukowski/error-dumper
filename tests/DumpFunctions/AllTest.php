@@ -24,7 +24,7 @@ class AllTest extends TestBase
     {
         $function = function () {
         };
-        $data = array(new \stdClass(), $this, $function, range(1, 1000), tmpfile(), null, array());
+        $data = array(new \stdClass(), $this, $function, range(1, 1000), tmpfile(), null, array(), new DebugInfo());
         $result = array();
         foreach (array(new LightVarDumper(), new InternalVarDumper(), new NothingVarDumper()) as $dumper) {
             foreach ($data as $var) {

@@ -38,9 +38,11 @@ class LightVarDumper implements DumpFunctionInterface
 
     private function convertString($string)
     {
+        // @codeCoverageIgnoreStart
         if (strlen($string) > 300) {
             $string = substr($string, 0, 300) . '...';
         }
+        // @codeCoverageIgnoreStop
         return $string;
     }
 
