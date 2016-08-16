@@ -15,7 +15,6 @@
   "require-dev": {
     "phpunit/phpunit": "4.* || 5.*",
     "satooshi/php-coveralls": "1.*",
-    "codacy/coverage": "~1.0.3",
     "phpmd/phpmd": "@stable",
     "squizlabs/php_codesniffer": "@stable",
     "fabpot/php-cs-fixer": "@stable"
