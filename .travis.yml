@@ -3,7 +3,7 @@ language: php
 install:
   - curl -s http://getcomposer.org/installer | php
   - echo $(php -r 'echo ini_get("memory_limit");')
-  - travis_wait php -n -d memory_limit=2G composer.phar install --profile
+  - travis_wait php -n -d memory_limit=2G composer.phar install --profile --no-interaction
   - mkdir -p build/logs
 
 php:
