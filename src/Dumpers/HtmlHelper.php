@@ -5,7 +5,6 @@ namespace ErrorDumper\Dumpers;
 use ErrorDumper\DumpFunctions\DumpFunctionInterface;
 use ErrorDumper\Editors\CannotGenerateLinkException;
 use ErrorDumper\Editors\EditorInterface;
-use ErrorDumper\Helpers\PHPVersion;
 use ErrorDumper\StackTrace\Step;
 use ErrorDumper\StackTrace\StepInterface;
 

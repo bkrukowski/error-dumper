@@ -5,7 +5,6 @@ namespace ErrorDumper\Tests\Dumpers;
 use ErrorDumper\Dumpers\HtmlHelper;
 use ErrorDumper\DumpFunctions\LightVarDumper;
 use ErrorDumper\Editors\PhpStorm;
-use ErrorDumper\Helpers\PHPVersion;
 
 class HtmlHelperTest extends \PHPUnit_Framework_TestCase
 {

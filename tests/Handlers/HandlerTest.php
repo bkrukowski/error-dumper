@@ -7,7 +7,6 @@ use ErrorDumper\Handlers\Handler;
 use ErrorDumper\Handlers\PreCallbackEvent;
 use ErrorDumper\Helpers\Stream;
 use ErrorDumper\StandardExceptions\FakeException;
-use ErrorDumper\Helpers\Stream as StreamHelper;
 
 class HandlerTest extends \PHPUnit_Framework_TestCase
 {
