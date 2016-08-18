@@ -29,3 +29,6 @@ New arguments have default value for backward compatibility.
 Added `ErrorDumper\DumpFunctions\NothingVarDumper` for extreme cases,
 when var_dump method can take too much memory.
 
+## 2.6
+
+Improvements for `ErrorDumper\DumpFunctions\LightVarDumper` - dump of variable will use less memory.
