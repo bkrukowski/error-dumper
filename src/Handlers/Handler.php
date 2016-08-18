@@ -41,7 +41,8 @@ class Handler implements HandlerInterface
 
     public function setPostCallback($callback)
     {
-        Exceptions::throwIfIsNotCallable($callback);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotCallable($callback);
         $this->postCallback = $callback;
 
         return $this;
@@ -49,7 +50,8 @@ class Handler implements HandlerInterface
 
     public function setPreCallback($callback)
     {
-        Exceptions::throwIfIsNotCallable($callback);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotCallable($callback);
         $this->preCallback = $callback;
 
         return $this;

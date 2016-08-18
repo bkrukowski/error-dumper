@@ -55,7 +55,8 @@ class Cli extends Base
      */
     public function setWindowWidthGetter($getter)
     {
-        Exceptions::throwIfIsNotCallable($getter);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotCallable($getter);
         $this->windowWidthGetter = $getter;
 
         return $this;

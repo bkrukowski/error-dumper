@@ -70,7 +70,8 @@ class Magic
      */
     public static function registerErrorCallback($callable, $mode = null, $errorTypes = RegisterErrorHandler::TYPE_ALL)
     {
-        Exceptions::throwIfIsNotCallable($callable);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotCallable($callable);
         $registerErrorHandler = new RegisterErrorHandler($callable, $mode);
         $registerErrorHandler->register($errorTypes);
     }

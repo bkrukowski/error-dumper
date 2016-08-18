@@ -92,7 +92,8 @@ class Html extends Base
      */
     public function setVarDumpFn(DumpFunctionInterface $function)
     {
-        Exceptions::throwIfIsNotCallable($function);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotCallable($function);
         $this->varDumpFn = $function;
 
         return $this;

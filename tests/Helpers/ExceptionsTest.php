@@ -41,7 +41,8 @@ class ExceptionsTest extends TestBase
         if (!$callable) {
             $this->setExpectedException('ErrorDumper\Helpers\NotCallableException');
         }
-        Exceptions::throwIfIsNotCallable($value);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotCallable($value);
     }
 
     public function providerTestThrowIfIsNotCallable()

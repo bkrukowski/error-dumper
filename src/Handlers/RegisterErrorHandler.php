@@ -51,7 +51,8 @@ class RegisterErrorHandler implements RegisterErrorHandlerInterface
 
     public function setCallable($callable)
     {
-        Exceptions::throwIfIsNotCallable($callable);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotCallable($callable);
         $this->callable = $callable;
 
         return $this;
