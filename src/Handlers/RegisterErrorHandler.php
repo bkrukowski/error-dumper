@@ -78,12 +78,12 @@ class RegisterErrorHandler implements RegisterErrorHandlerInterface
     private function registerErrorHandler()
     {
         $self = $this;
-        set_error_handler(function ($no, $str, $file, $line) use ($self) {
+        set_error_handler(function ($number, $str, $file, $line) use ($self) {
             $exception = new FatalErrorException();
             $exception
                 ->setFile($file)
                 ->setMessage($str)
-                ->setCode($no)
+                ->setCode($number)
                 ->setLine($line);
             $self->onError($exception);
         }, $this->mode);

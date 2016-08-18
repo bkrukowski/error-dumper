@@ -115,16 +115,16 @@ class HtmlHelper
         $lines = explode("\n", file_get_contents($filename));
         $countLines = count($lines);
         $maxDiff = 7;
-        $from = $line - $maxDiff - 1;
-        if ($from < 0) {
-            $from = 0;
+        $fromLine = $line - $maxDiff - 1;
+        if ($fromLine < 0) {
+            $fromLine = 0;
         }
-        $to = $line + $maxDiff;
-        if ($to > $countLines) {
-            $to = $countLines;
+        $toLine = $line + $maxDiff;
+        if ($toLine > $countLines) {
+            $toLine = $countLines;
         }
-        $maxStrLen = strlen($to) + 4;
-        $outputLines = array_slice($lines, $from, $maxDiff*2+1, true);
+        $maxStrLen = strlen($toLine) + 4;
+        $outputLines = array_slice($lines, $fromLine, $maxDiff*2+1, true);
         foreach ($outputLines as $key => &$currentLine) {
             $currentLine = str_replace("\t", '    ', $currentLine);
             $currentLineNumber = $key + 1;
