@@ -62,7 +62,8 @@ class HtmlTest extends TestBase
     private function createEditorMock()
     {
         $className = 'ErrorDumper\Editors\EditorInterface';
-        if (version_compare(\PHPUnit_Runner_Version::id(), '5.4', '>=')) {
+        $version = new \PHPUnit_Runner_Version();
+        if (version_compare($version->id(), '5.4', '>=')) {
             return $this->createMock($className);
         }
 
