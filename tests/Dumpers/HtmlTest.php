@@ -18,8 +18,7 @@ class HtmlTest extends TestBase
      */
     public function testAll(EditorInterface $editor)
     {
-        /** @var EditorInterface|\PHPUnit_Framework_MockObject_MockObject $editorMock */
-        $editorMock = $this->getMock('ErrorDumper\Editors\EditorInterface');
+        $editorMock = $this->createEditorMock();
         $used = false;
         $editorMock->method('createLinkToFile')
             ->willReturnCallback(function ($file, $line) use (&$used, $editor) {
@@ -51,5 +50,18 @@ class HtmlTest extends TestBase
         );
 
         return $this->prepareDataProvider($data);
+    }
+
+    /**
+     * @return EditorInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    private function createEditorMock()
+    {
+        $className = 'ErrorDumper\Editors\EditorInterface';
+        if (version_compare(\PHPUnit_Runner_Version::id(), '5.4', '>=')) {
+            return $this->createMock($className);
+        }
+
+        return $this->getMock($className);
     }
 }
