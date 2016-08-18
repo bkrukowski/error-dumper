@@ -56,7 +56,7 @@ function runTestsFor()
 
 function runTestsForAll
 {
-    for version in 53 54 55 56 70
+    for version in 53 54 55 56 70 71
     do
         runTestsFor $version
     done
@@ -69,7 +69,7 @@ then
     echo "    -h - this command"
     echo "    53 - run tests for php53 (command 'php53' is required)"
     echo "    without arguments - run tests for all supported php versions"
-    echo -n "Supported php versions: 53, 54, 55, 56, 70, default."
+    echo -n "Supported php versions: 53, 54, 55, 56, 70, 71, default."
     resetTextStyle
     echo ""
     exit 0
