@@ -19,7 +19,8 @@ class CliTest extends \PHPUnit_Framework_TestCase
         });
         $this->assertSame($cli, $returnedCli);
         $cli->displayException(new \Exception(__FILE__));
-        $output = Stream::getContentsFromStream($stream);
+        $streamObj = new Stream($stream);
+        $output = $streamObj->getContents();
         $this->assertTrue($called);
         $this->assertContains(__FILE__, $output);
         $this->assertContains(str_pad('', 35, '#'), $output);

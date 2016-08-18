@@ -5,6 +5,7 @@ namespace ErrorDumper\Tests\Handlers;
 use ErrorDumper\Dumpers\DumperInterface;
 use ErrorDumper\Handlers\Handler;
 use ErrorDumper\Handlers\PreCallbackEvent;
+use ErrorDumper\Helpers\Stream;
 use ErrorDumper\StandardExceptions\FakeException;
 use ErrorDumper\Helpers\Stream as StreamHelper;
 use ErrorDumper\Tests\TestBase;
@@ -19,7 +20,8 @@ class HandlerTest extends TestBase
         $message = 'Some error!';
         $fakeException = new FakeException();
         $mock->displayException($fakeException->setMessage($message));
-        $this->assertSame($message, StreamHelper::getContentsFromStream($stream));
+        $streamObj = new Stream($stream);
+        $this->assertSame($message, $streamObj->getContents());
         fclose($stream);
     }
 
@@ -73,7 +75,8 @@ class HandlerTest extends TestBase
             fputs($stream, $postText);
         });
         $handler($exception);
-        $this->assertSame($expected, StreamHelper::getContentsFromStream($stream));
+        $streamObj = new Stream($stream);
+        $this->assertSame($expected, $streamObj->getContents());
     }
 
     public function callbacksDataProvider()

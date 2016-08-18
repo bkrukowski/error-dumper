@@ -15,4 +15,15 @@ class StreamTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(__CLASS__ . ' foo', Stream::getContentsFromStream($stream));
         fclose($stream);
     }
+
+    public function testGetContents()
+    {
+        $stream  = tmpfile();
+        $streamObj = new Stream($stream);
+        fputs($stream, __CLASS__);
+        $this->assertSame(__CLASS__, $streamObj->getContents());
+        fputs($stream, ' foo');
+        $this->assertSame(__CLASS__ . ' foo', $streamObj->getContents());
+        fclose($stream);
+    }
 }

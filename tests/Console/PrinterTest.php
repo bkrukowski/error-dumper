@@ -18,7 +18,8 @@ class PrinterTest extends TestBase
         $text = __FILE__;
         $printer = new Printer($stream);
         $this->assertSame($printer, $printer->$functionName($text));
-        $this->assertContains($text, Stream::getContentsFromStream($stream));
+        $streamObj = new Stream($stream);
+        $this->assertContains($text, $streamObj->getContents());
     }
 
     public function providerTestMessageBox()
@@ -41,7 +42,9 @@ class PrinterTest extends TestBase
         $printer = new Printer($firstStream);
         $this->assertSame($printer, $printer->setOutputStream($secondStream));
         $printer->defaultBox($text);
-        $this->assertSame('', Stream::getContentsFromStream($firstStream));
-        $this->assertContains($text, Stream::getContentsFromStream($secondStream));
+        $firstStreamObj = new Stream($firstStream);
+        $secondStreamObj = new Stream($secondStream);
+        $this->assertSame('', $firstStreamObj->getContents());
+        $this->assertContains($text, $secondStreamObj->getContents());
     }
 }

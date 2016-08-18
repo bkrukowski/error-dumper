@@ -96,7 +96,8 @@ class Magic
         }
         $dumper->setVarDumpFn($varDumper);
         $dumper->displayException($exception);
-        $result = Stream::getContentsFromStream($tmp);
+        $stream = new Stream($tmp);
+        $result = $stream->getContents();
         fclose($tmp);
 
         return $result;

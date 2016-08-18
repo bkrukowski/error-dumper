@@ -10,6 +10,9 @@ use ErrorDumper\Editors\PhpStorm;
 use ErrorDumper\Helpers\Stream as StreamHelper;
 use ErrorDumper\Tests\TestBase;
 
+/**
+ * @package ErrorDumper
+ */
 class HtmlTest extends TestBase
 {
     /**
@@ -35,7 +38,8 @@ class HtmlTest extends TestBase
         $this->assertSame($html, $html->setVarDumpFn(new LightVarDumper()));
         $this->assertSame($html, $html->setEditor($editorMock));
         $html->displayException(new \Exception(__FILE__));
-        $output = StreamHelper::getContentsFromStream($stream);
+        $streamObj = new StreamHelper($stream);
+        $output = $streamObj->getContents();
         $this->assertContains(Html::TAG_HTML, $output);
         $this->assertContains(Html::TAG_UNDER_TITLE, $output);
         $this->assertContains(__FILE__, $output);
