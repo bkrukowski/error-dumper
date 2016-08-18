@@ -196,7 +196,7 @@ class HtmlHelper
              * isVariadic requires at least php 5.6.0
              */
             // @codeCoverageIgnoreStart
-            if (PHPVersion::atLeast('5.6.0') && $reflectionParam->isVariadic()) {
+            if (version_compare(PHP_VERSION, '5.6.0') >= 0 && $reflectionParam->isVariadic()) {
                 $result = array_merge($result, $this->getVariadicParameters($reflectionParam, $params));
                 $params = array();
                 break;

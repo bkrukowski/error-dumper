@@ -16,7 +16,7 @@ class Exceptions
         if (!is_object($var)) {
             throw new NotThrowableException('Variable has to be throwable, but is not even object!');
         }
-        if (PHPVersion::atLeast('7.0')) {
+        if (version_compare(PHP_VERSION, '7.0') >= 0) {
             // @codeCoverageIgnoreStart
             if (!$var instanceof \Throwable) {
                 throw new NotThrowableException('Variable is not instance of \Throwable!');
