@@ -35,15 +35,21 @@ class AllEditorsTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider providerTestRegisterDirectoryMap
      * @param EditorInterface $editor
-     * @param $from
-     * @param $to
+     * @param $fromDir
+     * @param $toDir
      * @param $file
      * @param $line
      * @param $expectedResultFile
      */
-    public function testRegisterDirectoryMap(EditorInterface $editor, $from, $to, $file, $line, $expectedResultFile)
-    {
-        $editor->registerDirectoryMap($from, $to);
+    public function testRegisterDirectoryMap(
+        EditorInterface $editor,
+        $fromDir,
+        $toDir,
+        $file,
+        $line,
+        $expectedResultFile
+    ) {
+        $editor->registerDirectoryMap($fromDir, $toDir);
         $link = $editor->createLinkToFile($file, $line);
         list(, $stringParams) = explode('?', $link, 2);
         parse_str($stringParams, $data);
