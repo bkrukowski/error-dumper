@@ -33,18 +33,20 @@ class Html extends Base
 
     public function __construct(EditorInterface $editor, $stream)
     {
+        $detector = new Detector();
         $this
             ->setEditor($editor)
             ->setOutputStream($stream)
             ->setBootstrapJs(static::BOOTSTRAP_JS)
             ->setBootstrapCss(static::BOOTSTRAP_CSS)
             ->setJqueryJs(static::JQUERY_JS)
-            ->setVarDumpFn(Detector::createDetectedVarDumper());
+            ->setVarDumpFn($detector->createDetectedVarDumper());
     }
 
     public function displayException($exception)
     {
-        Exceptions::throwIfIsNotThrowable($exception);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotThrowable($exception);
         $vars = array(
             'exception' => $exception,
             'exceptionClass' => get_class($exception),

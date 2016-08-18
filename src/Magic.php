@@ -87,7 +87,8 @@ class Magic
         Editors\EditorInterface $editor = null,
         DumpFunctionInterface $varDumper = null
     ) {
-        Exceptions::throwIfIsNotThrowable($exception);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotThrowable($exception);
         is_null($editor) && $editor = new Editors\Nothing();
         $tmp = tmpfile();
         $dumper = new Dumpers\Html($editor, $tmp);

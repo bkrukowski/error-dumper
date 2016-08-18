@@ -17,7 +17,8 @@ class ExceptionsTest extends TestBase
         if (!$throwable) {
             $this->setExpectedException('ErrorDumper\Helpers\NotThrowableException');
         }
-        Exceptions::throwIfIsNotThrowable($value);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotThrowable($value);
     }
 
     public function providerTestThrowIfIsNotThrowable()

@@ -63,7 +63,8 @@ class RegisterErrorHandler implements RegisterErrorHandlerInterface
      */
     public function onError($exception)
     {
-        Exceptions::throwIfIsNotThrowable($exception);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotThrowable($exception);
         call_user_func($this->callable, $exception);
     }
 

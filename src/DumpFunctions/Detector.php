@@ -10,6 +10,7 @@ class Detector
     const SYMFONY_COMPONENT_CLASS = 'Symfony\Component\VarDumper\Dumper\HtmlDumper';
 
     /**
+     * @deprecated this method will not be static in major new version
      * @codeCoverageIgnore
      * @return DumpFunctionInterface
      */

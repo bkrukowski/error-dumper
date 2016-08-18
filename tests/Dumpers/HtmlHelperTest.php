@@ -41,7 +41,7 @@ class HtmlHelperTest extends TestBase
             $exceptionsHelper->createExceptionMagicCall(),
             $exceptionsHelper->createExceptionMagicStaticCall(),
         );
-        if (PHPVersion::atLeast('5.6.0')) {
+        if (version_compare(PHP_VERSION, '5.6.0') >= 0) {
             $exceptions[] = $exceptionsHelper->createExceptionVariadicParams();
             $exceptions[] = $exceptionsHelper->createExceptionVariadicParams2();
         }

@@ -60,7 +60,8 @@ class Handler implements HandlerInterface
      */
     public function __invoke($exception)
     {
-        Exceptions::throwIfIsNotThrowable($exception);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotThrowable($exception);
         $pre = $this->preCallback;
         if (!empty($pre)) {
             try {

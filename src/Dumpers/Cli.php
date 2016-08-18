@@ -28,7 +28,8 @@ class Cli extends Base
 
     public function displayException($exception)
     {
-        Exceptions::throwIfIsNotThrowable($exception);
+        $exceptions = new Exceptions();
+        $exceptions->throwIfIsNotThrowable($exception);
         $width = $this->getWindowWidth();
         $this->printer->defaultBox('');
         $this->printer->defaultBox('');

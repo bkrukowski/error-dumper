@@ -8,6 +8,7 @@ namespace ErrorDumper\Helpers;
 class Exceptions
 {
     /**
+     * @deprecated this method will not be static in major new version
      * @param \Exception|\Throwable $var
      * @throws NotThrowableException
      */
@@ -30,6 +31,7 @@ class Exceptions
     }
 
     /**
+     * @deprecated this method will not be static in major new version
      * @param callable $var
      * @throws NotCallableException
      */
