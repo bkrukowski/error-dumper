@@ -22,6 +22,7 @@ class Stream
     public static function getContentsFromStream($stream)
     {
         $self = new static($stream);
+
         return $self->getContents();
     }
 
