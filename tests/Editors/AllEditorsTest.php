@@ -6,9 +6,8 @@ use ErrorDumper\Editors\EditorInterface;
 use ErrorDumper\Editors\MacVim;
 use ErrorDumper\Editors\PhpStorm;
 use ErrorDumper\Editors\TextMate;
-use ErrorDumper\Tests\TestBase;
 
-class AllEditorsTest extends TestBase
+class AllEditorsTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider providerTestCreateLinkToFile
@@ -25,12 +24,12 @@ class AllEditorsTest extends TestBase
 
     public function providerTestCreateLinkToFile()
     {
-        return $this->prepareDataProvider(array(
+        return array(
             array(new MacVim(), __FILE__, __LINE__),
             array(new PhpStorm(), __FILE__, __LINE__),
             array(new TextMate(), __FILE__, __LINE__),
             array(new PhpStorm(), '/a/b/c', 456),
-        ));
+        );
     }
 
     /**
@@ -54,8 +53,8 @@ class AllEditorsTest extends TestBase
 
     public function providerTestRegisterDirectoryMap()
     {
-        $from = '/var/www';
-        $to = '~/projects/error-dumper';
+        $fromDir = '/var/www';
+        $toDir = '~/projects/error-dumper';
         $suffix = '/foo/bar/foobar.php';
 
         $result = array();
@@ -63,9 +62,9 @@ class AllEditorsTest extends TestBase
             $class = 'ErrorDumper\Editors\\' . $class;
             /** @var EditorInterface $editor */
             $editor = new $class();
-            $result[] = array($editor, $from, $to, $from . $suffix, __LINE__, $to . $suffix);
+            $result[] = array($editor, $fromDir, $toDir, $fromDir . $suffix, __LINE__, $toDir . $suffix);
         }
 
-        return $this->prepareDataProvider($result);
+        return $result;
     }
 }
