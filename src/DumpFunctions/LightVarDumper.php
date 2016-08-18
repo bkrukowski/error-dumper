@@ -58,11 +58,9 @@ class LightVarDumper implements DumpFunctionInterface
     private function convertObject($object)
     {
         $reflection = new \ReflectionClass($object);
-        if ($reflection->hasMethod('__debugInfo'))
-        {
+        if ($reflection->hasMethod('__debugInfo')) {
             $method = $reflection->getMethod('__debugInfo');
-            if ($method->isPublic() && !$method->getParameters())
-            {
+            if ($method->isPublic() && !$method->getParameters()) {
                 return call_user_func(array($object, '__debugInfo'));
             }
         }
