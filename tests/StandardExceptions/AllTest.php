@@ -3,9 +3,8 @@
 namespace ErrorDumper\Tests\StandardExceptions;
 
 use ErrorDumper\StandardExceptions\FakeException;
-use ErrorDumper\Tests\TestBase;
 
-class AllTest extends TestBase
+class AllTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider providerTestSetters
@@ -46,6 +45,6 @@ class AllTest extends TestBase
             }
         }
 
-        return $this->prepareDataProvider($result);
+        return $result;
     }
 }

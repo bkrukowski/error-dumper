@@ -6,9 +6,8 @@ use ErrorDumper\DumpFunctions\DumpFunctionInterface;
 use ErrorDumper\DumpFunctions\InternalVarDumper;
 use ErrorDumper\DumpFunctions\LightVarDumper;
 use ErrorDumper\DumpFunctions\NothingVarDumper;
-use ErrorDumper\Tests\TestBase;
 
-class AllTest extends TestBase
+class AllTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider providerTestInvoke
@@ -32,6 +31,6 @@ class AllTest extends TestBase
             }
         }
 
-        return $this->prepareDataProvider($result);
+        return $result;
     }
 }

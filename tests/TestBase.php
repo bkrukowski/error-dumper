@@ -2,6 +2,9 @@
 
 namespace ErrorDumper\Tests;
 
+/**
+ * @deprecated
+ */
 abstract class TestBase extends \PHPUnit_Framework_TestCase
 {
     protected function prepareDataProvider(array $data)

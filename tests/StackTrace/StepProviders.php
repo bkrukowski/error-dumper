@@ -2,10 +2,9 @@
 
 namespace ErrorDumper\Tests\StackTrace;
 
-use ErrorDumper\Tests\TestBase;
 use ErrorDumper\StackTrace\Step;
 
-class StepProviders extends TestBase
+class StepProviders extends \PHPUnit_Framework_TestCase
 {
     public function providerTestInFunction()
     {

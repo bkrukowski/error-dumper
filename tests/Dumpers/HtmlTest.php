@@ -8,12 +8,10 @@ use ErrorDumper\Editors\EditorInterface;
 use ErrorDumper\Editors\Nothing;
 use ErrorDumper\Editors\PhpStorm;
 use ErrorDumper\Helpers\Stream as StreamHelper;
-use ErrorDumper\Tests\TestBase;
-
 /**
  * @package ErrorDumper
  */
-class HtmlTest extends TestBase
+class HtmlTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider providerTestAll
@@ -48,12 +46,10 @@ class HtmlTest extends TestBase
 
     public function providerTestAll()
     {
-        $data = array(
+        return array(
             array(new PhpStorm()),
             array(new Nothing()),
         );
-
-        return $this->prepareDataProvider($data);
     }
 
     /**
