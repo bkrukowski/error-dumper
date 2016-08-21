@@ -16,7 +16,7 @@ php:
   - nightly
 
 script:
-  - ./vendor/bin/phpunit tests --coverage-clover ./build/logs/clover.xml
+  - ./vendor/bin/phpunit
 
 after_script:
   - travis_retry php vendor/bin/coveralls -v

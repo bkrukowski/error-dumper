@@ -48,9 +48,8 @@ function runTestsFor()
         rm $BASE_DIR/composer.lock
     fi
     echo 'Executing tests...'
-    php$version "build/php-versions/$version/bin/phpunit" tests \
-        --bootstrap "build/php-versions/$version/autoload.php" \
-        --colors=auto
+    php$version "build/php-versions/$version/bin/phpunit" \
+        --bootstrap "build/php-versions/$version/autoload.php"
     echo ""
 }
 
