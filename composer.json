@@ -21,7 +21,8 @@
     "fabpot/php-cs-fixer": "@stable"
   },
   "suggest": {
-    "symfony/var-dumper": "Pretty var_dump without xdebug."
+    "symfony/var-dumper": "Pretty var_dump without xdebug.",
+    "awesomite/error-dumper": "ErrorDumper has moved to a new package name. This package is deprecated."
   },
   "conflict": {
     "symfony/var-dumper": "<2.0 || >=4.0"
