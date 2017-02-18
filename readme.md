@@ -4,6 +4,8 @@
 
 # Pretty error dumper for PHP
 
+**ErrorDumper** *has been moved to* [awesomite/error-dumper](https://github.com/awesomite/error-dumper), please use new repository.
+
 ## Requirements
 
 * PHP >= 5.3 (also 7.0 is supported)
